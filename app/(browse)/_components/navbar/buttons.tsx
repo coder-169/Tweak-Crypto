@@ -3,43 +3,61 @@ import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 const Buttons = ({ user }: { user: any }) => {
   const [show, setShow] = useState(false);
   const handleStyle = () => {
     setShow(!show);
   };
   const [credits, setCredits] = useState("");
+  const router = useRouter();
   const handleDeposit = async () => {
+    setShow(false);
     try {
       const usCreds = parseInt(user?.credits);
       const newCreds = usCreds + parseInt(credits);
-      console.log(newCreds)
+      console.log(newCreds);
       const res = await fetch("/api/wallet/deposit", {
         method: "POST",
         body: JSON.stringify({ id: user?.externalUserId, newCreds }),
       });
       const data = await res.json();
       console.log(data);
+      if (data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+      setCredits("");
     } catch (error: any) {
       console.log(error);
     }
+    router.refresh();
   };
   const handleWithdraw = async () => {
+    setShow(false);
     try {
+      if(parseInt(credits) < 1) return toast.error("You can't withdraw less than 1 credit");
       const usCreds = parseInt(user?.credits);
       if (usCreds < parseInt(credits)) {
-        toast.error("You don't have enough credits to withdraw");
+        return toast.error("You don't have enough credits to withdraw");
       }
-      const newCreds = user?.credits + parseInt(credits);
+      const newCreds = user?.credits - parseInt(credits);
       const res = await fetch("/api/wallet/withdraw", {
         method: "POST",
-        body: JSON.stringify({ id: user?.externalUserId, newCreds: credits }),
+        body: JSON.stringify({ id: user?.externalUserId, newCreds }),
       });
       const data = await res.json();
-      console.log(data);
+      if (data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+      setCredits("");
     } catch (error: any) {
       console.log(error);
     }
+    router.refresh();
   };
   return (
     <div className="relative">
