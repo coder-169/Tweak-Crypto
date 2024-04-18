@@ -10,15 +10,18 @@ import Buttons from "./buttons";
 export const Actions = async () => {
   const user = await currentUser();
   // console.log(user.id);
-  const userdata = await db.user.findUnique({
-    where: {
-      externalUserId: user?.id,
-    },
-  });
+  let userdata = null;
+  if (user) {
+    userdata = await db.user.findUnique({
+      where: {
+        externalUserId: user?.id,
+      },
+    });
+  }
 
   return (
     <div className="flex items-center justify-end gap-x-2 ml-4 lg:ml-0">
-      <Buttons user={userdata}/>
+      {user && <Buttons user={userdata} />}
       {!user && (
         <SignInButton>
           <Button size="sm" variant="primary">

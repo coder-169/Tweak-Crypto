@@ -7,8 +7,7 @@ export default authMiddleware({
   publicRoutes: [
     "/",
     "/api/webhooks(.*)",
-    "/api/wallet/deposit",
-    "/api/wallet/withdraw",
+    "/api/wallet(.*)",
     "/api/uploadthing",
     "/:username",
     "/search"
