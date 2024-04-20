@@ -14,17 +14,16 @@ const Buttons = ({ user }: { user: any }) => {
   const handleDeposit = async () => {
     setShow(false);
     try {
-      const usCreds = parseInt(user?.credits);
-      const newCreds = usCreds + parseInt(credits);
-      console.log(newCreds);
       const res = await fetch("/api/wallet/deposit", {
         method: "POST",
-        body: JSON.stringify({ id: user?.externalUserId, newCreds }),
+        body: JSON.stringify({ id: user?.externalUserId, credits }),
       });
       const data = await res.json();
       console.log(data);
       if (data.success) {
-        toast.success(data.message);
+        if (data.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+        }
       } else {
         toast.error(data.message);
       }
@@ -37,7 +36,8 @@ const Buttons = ({ user }: { user: any }) => {
   const handleWithdraw = async () => {
     setShow(false);
     try {
-      if(parseInt(credits) < 1) return toast.error("You can't withdraw less than 1 credit");
+      if (parseInt(credits) < 1)
+        return toast.error("You can't withdraw less than 1 credit");
       const usCreds = parseInt(user?.credits);
       if (usCreds < parseInt(credits)) {
         return toast.error("You don't have enough credits to withdraw");
