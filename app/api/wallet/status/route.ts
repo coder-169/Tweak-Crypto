@@ -36,44 +36,33 @@ async function dispatch_request(http_method: string, path: string) {}
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { credits } = body;
-    const price_amount = parseInt(credits)
-    console.log(typeof price_amount)
-    var data = JSON.stringify({
-      price_amount,
-      price_currency: "usdt",
-      pay_currency: "usdttrc20",
-      // pay_address:"TSyfA18d3sRctDb1vCj1fbpdp6r1B9CY6P",
-      ipn_callback_url: "https://nowpayments.io",
-      order_id: "RGDBP-21314",
-      order_description: "Apple Macbook Pro 2019 x 1",
-    });
-
-    const resp = await fetch("https://api.nowpayments.io/v1/payment", {
-      method: "POST",
-      headers: new Headers({
-        "x-api-key": process.env.NOWAPIKEY || "",
-        "Content-Type": "application/json",
-      }),
-      body: data,
-    });
+    const resp = await fetch(
+      `https://api.nowpayments.io/v1/payment/${body.id}`,
+      {
+        method: "GET",
+        headers: new Headers({
+          "x-api-key": process.env.NOWAPIKEY || "",
+        }),
+      }
+    );
     const d = await resp.json();
-    console.log(d)
-    if (resp.ok) {
-      return NextResponse.json(
-        { success: true, payout: d, message: "Payment Created Successfully" },
-        {
-          status: 200,
-        }
-      );
-    } else {
-      return NextResponse.json(
-        { success: false, message: d.message },
-        {
-          status: 400,
-        }
-      );
+    const newCredits = d.pay_amount + body.credits
+    if (d.status === "finished") {
+      await db.user.update({
+        where: {
+          externalUserId: body?.userId,
+        },
+        data: {
+          credits: newCredits,
+        },
+      });
     }
+    console.log(d);
+    return NextResponse.json({
+      success: true,
+      message: "status found",
+      details: d,
+    });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, message: error.message },
