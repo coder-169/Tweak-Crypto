@@ -289,6 +289,7 @@ export const ChatForm = ({
   useEffect(() => {
     getUser();
     console.log("called everytime");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (isHidden) {
     return null;
