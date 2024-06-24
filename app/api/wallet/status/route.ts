@@ -1,5 +1,4 @@
 import { db } from "@/lib/db";
-import ccxt from "ccxt";
 import { NextResponse } from "next/server";
 const crypto = require("crypto");
 const axios = require("axios");
@@ -46,7 +45,8 @@ export async function POST(req: Request) {
       }
     );
     const d = await resp.json();
-    const newCredits = d.pay_amount + body.credits
+    const newCredits = d.pay_amount + (body.credits * 100)
+    console.log(newCredits)
     if (d.status === "finished") {
       await db.user.update({
         where: {

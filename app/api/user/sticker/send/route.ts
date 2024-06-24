@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const myuser = await currentUser();
     const body = await req.json();
-    const { receiver, sticker } = body;
+    const { receiver, sticker, sendQty } = body;
 
     if (myuser?.username === null) {
       return NextResponse.json({
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
           }
         );
       }
-      if (sticker === 0 && stickerSender?.lions < 40) {
+      if (sticker === 0 && stickerSender?.coins < sendQty) {
         return NextResponse.json(
           {
             success: false,
@@ -57,7 +57,18 @@ export async function POST(req: Request) {
           }
         );
       }
-      if (sticker === 1 && stickerSender.credits < 100) {
+      if (sticker === 1 && stickerSender.lions < sendQty) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Sorry you don't have enough Credits",
+          },
+          {
+            status: 200,
+          }
+        );
+      }
+      if (sticker === 2 && stickerSender.penguins < sendQty) {
         return NextResponse.json(
           {
             success: false,
@@ -74,7 +85,7 @@ export async function POST(req: Request) {
             username: stickerSender?.username,
           },
           data: {
-            credits: stickerSender?.credits - 40,
+            coins: stickerSender?.coins - sendQty,
           },
         });
         await db.user.update({
@@ -82,7 +93,7 @@ export async function POST(req: Request) {
             username: receiver,
           },
           data: {
-            credits: stickerReceiver?.credits + 40,
+            credits: stickerReceiver?.credits + (sendQty * 10),
           },
         });
       }
@@ -92,7 +103,7 @@ export async function POST(req: Request) {
             username: stickerSender?.username,
           },
           data: {
-            credits: stickerSender?.credits - 100,
+            lions: stickerSender?.lions - sendQty,
           },
         });
         await db.user.update({
@@ -100,7 +111,25 @@ export async function POST(req: Request) {
             username: receiver,
           },
           data: {
-            credits: stickerReceiver?.credits + 100,
+            credits: stickerReceiver?.credits + (1000 * sendQty),
+          },
+        });
+      }
+      if (sticker === 2) {
+      await db.user.update({
+        where: {
+          username: stickerSender?.username,
+        },
+        data: {
+          lions: stickerSender?.lions - sendQty,
+        },
+      });
+        await db.user.update({
+          where: {
+            username: receiver,
+          },
+          data: {
+            credits: stickerReceiver?.credits + (10000 * sendQty),
           },
         });
       }

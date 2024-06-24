@@ -225,6 +225,26 @@ body,
     transform: rotate(360deg);
   }
 }
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #000000;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .sm-loader {
   width: 24px;
   height: 24px;
@@ -288,4 +308,84 @@ body,
   100% {
     clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
   }
+}
+
+/* Custom scrollbar styles */
+.scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #2d3748; /* Tailwind's gray-900 */
+  border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #edf2f7; /* Tailwind's gray-100 */
+}
+.my-purple {
+  background-color: rgb(84, 28, 145);
+  background-image: radial-gradient(
+      at 0% 0%,
+      rgb(34, 34, 38) 0,
+      transparent 50%
+    ),
+    radial-gradient(at 50% 0%, rgb(117, 28, 212) 0, transparent 50%),
+    radial-gradient(at 100% 0%, rgb(84, 28, 145) 0, transparent 50%);
+  background-color: rgb(64, 21, 109);
+}
+.my-purple:hover {
+  background-color: rgb(107, 35, 184);
+  background-image: radial-gradient(
+      at 0% 0%,
+      rgb(34, 34, 38) 0,
+      transparent 50%
+    ),
+    radial-gradient(at 50% 0%, rgb(117, 28, 212) 0, transparent 50%),
+    radial-gradient(at 100% 0%, rgb(107, 35, 184) 0, transparent 50%);
+  background-color: rgb(107, 35, 184);
+}
+.my-yellow {
+  background-color: rgb(96, 105, 18);
+  background-image: radial-gradient(
+      at 0% 0%,
+      rgb(34, 34, 38) 0,
+      transparent 50%
+    ),
+    radial-gradient(at 50% 0%, rgb(201, 220, 24) 0, transparent 50%),
+    radial-gradient(at 100% 0%, rgb(96, 105, 18) 0, transparent 50%);
+  background-color: rgb(96, 105, 18);
+}
+.my-yellow:hover {
+  background-color: rgb(141, 154, 24);
+  background-image: radial-gradient(
+      at 0% 0%,
+      rgb(34, 34, 38) 0,
+      transparent 50%
+    ),
+    radial-gradient(at 50% 0%, rgb(201, 220, 24) 0, transparent 50%),
+    radial-gradient(at 100% 0%, rgb(141, 154, 24) 0, transparent 50%);
+  background-color: rgb(141, 154, 24);
+}
+.my-green {
+  background-color: rgb(36, 112, 28);
+  background-image: radial-gradient(
+      at 0% 0%,
+      rgb(34, 34, 38) 0,
+      transparent 50%
+    ),
+    radial-gradient(at 50% 0%, rgb(58, 176, 45) 0, transparent 50%),
+    radial-gradient(at 100% 0%, rgb(36, 112, 28) 0, transparent 50%);
+  background-color: rgb(36, 112, 28);
+}
+.my-green:hover {
+  background-color: rgb(57, 180, 44);
+  background-image: radial-gradient(
+      at 0% 0%,
+      rgb(34, 34, 38) 0,
+      transparent 50%
+    ),
+    radial-gradient(at 50% 0%, rgb(70, 196, 56) 0, transparent 50%),
+    radial-gradient(at 100% 0%, rgb(57, 180, 44) 0, transparent 50%);
+  background-color: rgb(57, 180, 44);
 }

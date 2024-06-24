@@ -14,7 +14,7 @@ export const getStreams = async () => {
   let streams = [];
 
   if (userId) {
-    streams = await db?.stream?.findMany({
+    streams = await db.stream.findMany({
       where: {
         user: {
           NOT: {
@@ -43,7 +43,7 @@ export const getStreams = async () => {
       ],
     });
   } else {
-    streams = await db?.stream?.findMany({
+    streams = await db.stream.findMany({
       select: {
         id: true,
         user: true,

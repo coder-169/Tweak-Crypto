@@ -42,6 +42,9 @@ export const LiveVideo = ({
   
   useEffect(() => {
     onVolumeChange(0);
+    // setInterval(()=>{
+    //   console.log(videoRef.current?.currentTime)
+    // },1000)
   }, []);
 
   const toggleFullscreen = () => {

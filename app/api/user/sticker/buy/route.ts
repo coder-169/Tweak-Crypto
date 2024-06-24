@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     const myuser = await currentUser();
     console.log(myuser);
     const body = await req.json();
-    const { sticker } = body;
+    const { sticker, buyQty } = body;
     if (myuser?.username === null) {
       return NextResponse.json({
         success: false,
@@ -27,9 +27,9 @@ export async function POST(req: Request) {
         );
 
       if (sticker === 0) {
-        if (user.credits < 40) {
+        if (user.credits < 10 * parseInt(buyQty)) {
           return NextResponse.json(
-            { success: false, message: "Not enough credits" },
+            { success: false, message: "Don't have enough credits" },
             { status: 400 }
           );
         }
@@ -38,15 +38,15 @@ export async function POST(req: Request) {
             username: myuser?.username,
           },
           data: {
-            credits: user.credits - 40,
-            coins: user.coins + 1,
+            credits: user.credits - 10 * parseInt(buyQty),
+            coins: user.coins + parseInt(buyQty),
           },
         });
       }
       if (sticker === 1) {
-        if (user.credits < 100) {
+        if (user.credits < 1000 * parseInt(buyQty)) {
           return NextResponse.json(
-            { success: false, message: "Not enough credits" },
+            { success: false, message: "Don't have enough credits" },
             { status: 400 }
           );
         }
@@ -55,14 +55,35 @@ export async function POST(req: Request) {
             username: myuser?.username,
           },
           data: {
-            credits: user.credits - 100,
-            lions: user.lions + 1,
+            credits: user.credits - 1000 * parseInt(buyQty),
+            lions: user.lions + parseInt(buyQty),
+          },
+        });
+      }
+      if (sticker === 2) {
+        if (user.credits < 10000 * parseInt(buyQty)) {
+          return NextResponse.json(
+            { success: false, message: "Don't have enough credits" },
+            { status: 400 }
+          );
+        }
+        await db.user.update({
+          where: {
+            username: myuser?.username,
+          },
+          data: {
+            credits: user.credits - 10000 * parseInt(buyQty),
+            penguins: user.penguins + parseInt(buyQty),
           },
         });
       }
     }
     return NextResponse.json(
-      { success: true, message: "sticker purchased successfully",user: myuser?.username, },
+      {
+        success: true,
+        message: "purchased successfully",
+        user: myuser?.username,
+      },
       {
         status: 200,
       }

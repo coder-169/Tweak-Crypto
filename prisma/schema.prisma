@@ -18,6 +18,7 @@ model User {
   credits        Int     @default(0)
   lions        Int     @default(0)
   coins        Int     @default(0)
+  penguins        Int     @default(0)
 
   following  Follow[] @relation("Following")
   followedBy Follow[] @relation("FollowedBy")

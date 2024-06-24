@@ -3,10 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { ConnectionState } from "livekit-client";
 import { useMediaQuery } from "usehooks-ts";
-import { 
+import {
+  ReceivedChatMessage,
   useChat,
-  useConnectionState, 
-  useRemoteParticipant
+  useConnectionState,
+  useRemoteParticipant,
 } from "@livekit/components-react";
 
 import { ChatVariant, useChatSidebar } from "@/store/use-chat-sidebar";
@@ -24,7 +25,7 @@ interface ChatProps {
   isChatEnabled: boolean;
   isChatDelayed: boolean;
   isChatFollowersOnly: boolean;
-};
+}
 
 export const Chat = ({
   hostName,
@@ -33,14 +34,14 @@ export const Chat = ({
   isFollowing,
   isChatEnabled,
   isChatDelayed,
-  isChatFollowersOnly
+  isChatFollowersOnly,
 }: ChatProps) => {
-  const matches = useMediaQuery('(max-width: 1024px)');
+  const matches = useMediaQuery("(max-width: 1024px)");
   const { variant, onExpand } = useChatSidebar((state) => state);
   const connectionState = useConnectionState();
   const participant = useRemoteParticipant(hostIdentity);
 
-  const isOnline = participant && connectionState === ConnectionState.Connected
+  const isOnline = participant && connectionState === ConnectionState.Connected;
 
   const isHidden = !isChatEnabled || !isOnline;
 
@@ -54,7 +55,38 @@ export const Chat = ({
   }, [matches, onExpand]);
 
   const reversedMessages = useMemo(() => {
-    return messages.sort((a, b) => b.timestamp - a.timestamp);
+    // const msgs = messages.sort((a, b) => b.timestamp - a.timestamp);
+
+    const msgs = messages;
+    let normMsgs: ReceivedChatMessage[] = [];
+    let penguinMsgs: ReceivedChatMessage[] = [];
+    let lionMsgs: ReceivedChatMessage[] = [];
+    let coinMsgs: ReceivedChatMessage[] = [];
+    for (let i = 0; i < msgs.length; i++) {
+      if (
+        msgs[i].message.toLowerCase().includes("sent") &&
+        msgs[i].message.toLowerCase().includes("lion")
+      ) {
+        console.log("we are here");
+        lionMsgs.push(msgs[i]);
+      } else if (
+        msgs[i].message.toLowerCase().includes("sent") &&
+        msgs[i].message.toLowerCase().includes("coin")
+      ) {
+        // data.message.split(" ")[data.message.split(" ").length - 4]
+        coinMsgs.push(msgs[i]);
+      } else if (
+        msgs[i].message.toLowerCase().includes("sent") &&
+        msgs[i].message.toLowerCase().includes("penguin")
+      ) {
+        // data.message.split(" ")[data.message.split(" ").length - 4]
+        penguinMsgs.push(msgs[i]);
+      } else {
+        normMsgs.push(msgs[i]);
+      }
+    }
+    console.log(messages);
+    return [...penguinMsgs, ...lionMsgs, ...coinMsgs, ...normMsgs];
   }, [messages]);
 
   const onSubmit = () => {
@@ -73,14 +105,10 @@ export const Chat = ({
       <ChatHeader />
       {variant === ChatVariant.CHAT && (
         <>
-          <ChatList
-            messages={reversedMessages}
-            isHidden={isHidden}
-          />
+          <ChatList messages={reversedMessages} isHidden={isHidden} />
           <ChatForm
             onSubmit={onSubmit}
             value={value}
-            setValue={setValue}
             onChange={onChange}
             isHidden={isHidden}
             isFollowersOnly={isChatFollowersOnly}

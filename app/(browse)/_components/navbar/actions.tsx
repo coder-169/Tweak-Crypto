@@ -3,7 +3,6 @@ import { Clapperboard } from "lucide-react";
 import { SignInButton, UserButton, currentUser } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
 import { db } from "@/lib/db";
 import Buttons from "./buttons";
 
@@ -22,9 +21,6 @@ export const Actions = async () => {
   return (
     <div className="flex items-center justify-end gap-x-2 ml-4 lg:ml-0">
       {user && <Buttons user={userdata} />}
-      {/* <Link href={`/products`}>
-        <span className="">Products</span>
-      </Link> */}
       {!user && (
         <SignInButton>
           <Button size="sm" variant="primary">

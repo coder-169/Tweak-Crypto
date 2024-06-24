@@ -18,10 +18,10 @@ import {
   CheckIcon,
   CurrencyEuroIcon,
 } from "@heroicons/react/24/outline";
+import { useChat } from "@livekit/components-react";
 
 const Buttons = ({ user }: { user: any }) => {
   const [open, setOpen] = useState(false);
-
   const [openWith, setOpenWith] = useState(false);
   const [show, setShow] = useState(false);
   const handleStyle = () => {
@@ -97,10 +97,9 @@ const Buttons = ({ user }: { user: any }) => {
   };
   const handleWithdraw = async () => {
     setOpenWith(true);
-    if(address === '')
-      return toast.error('Please enter deposit address')
+    if (address === "") return toast.error("Please enter deposit address");
     console.log(address, credits);
-    setLoading(true)
+    setLoading(true);
     try {
       if (parseInt(credits) < 1)
         return toast.error("You can't withdraw less than 1 credit");
@@ -119,7 +118,7 @@ const Buttons = ({ user }: { user: any }) => {
         }),
       });
       const data = await res.json();
-      console.log(data)
+      console.log(data);
       if (data.success) {
         toast.success(data.message);
       } else {
@@ -128,7 +127,7 @@ const Buttons = ({ user }: { user: any }) => {
     } catch (error: any) {
       console.log(error);
     }
-    setLoading(false)
+    setLoading(false);
     router.refresh();
   };
   const [isCopied, setIsCopied] = useState(false);
@@ -168,7 +167,7 @@ const Buttons = ({ user }: { user: any }) => {
         const exp_estimate = parsed?.expiration_estimate_date;
         const expDate = new Date(exp_estimate);
         const currentDate = new Date();
-        console.log(expDate,currentDate)
+        console.log(expDate, currentDate);
         if (expDate <= currentDate) {
           setOpen(false);
           setShow(false);
