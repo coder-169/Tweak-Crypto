@@ -3,7 +3,6 @@ import { Suspense, useEffect } from "react";
 import { Navbar } from "./_components/navbar";
 import { Container } from "./_components/container";
 import { Sidebar, SidebarSkeleton } from "./_components/sidebar";
-import { useTimeTracking } from "@/context/TimeContext";
 
 const BrowseLayout = ({ children }: { children: React.ReactNode }) => {
  
