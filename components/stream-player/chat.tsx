@@ -80,6 +80,7 @@ export const Chat = ({
           <ChatForm
             onSubmit={onSubmit}
             value={value}
+            setValue={setValue}
             onChange={onChange}
             isHidden={isHidden}
             isFollowersOnly={isChatFollowersOnly}

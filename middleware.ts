@@ -9,6 +9,8 @@ export default authMiddleware({
     "/api/webhooks(.*)",
     "/api/wallet(.*)",
     "/api/uploadthing",
+    "/api/user/stickers(.*)",
+    "/api/user/tip",
     "/:username",
     "/search"
   ]

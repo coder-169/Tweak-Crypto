@@ -38,7 +38,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { credits } = body;
     const price_amount = parseInt(credits)
-    console.log(typeof price_amount)
+    console.log(price_amount)
     var data = JSON.stringify({
       price_amount,
       price_currency: "usdt",
