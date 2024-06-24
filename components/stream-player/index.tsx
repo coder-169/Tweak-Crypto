@@ -3,7 +3,6 @@
 import { Stream, User } from "@prisma/client";
 import { LiveKitRoom } from "@livekit/components-react";
 import { useEffect, useState } from "react";
-import { Room, RoomEvent } from "livekit-client";
 import { cn } from "@/lib/utils";
 import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { useViewerToken } from "@/hooks/use-viewer-token";
@@ -47,51 +46,6 @@ export const StreamPlayer = ({
 }: StreamPlayerProps) => {
   const { token, name, identity } = useViewerToken(user.id);
   const { collapsed } = useChatSidebar((state) => state);
-  const [startTime, setStartTime] = useState<number | null>(null);
-
-  useEffect(() => {
-    const room = new Room();
-
-    const handleTrackSubscribed = () => {
-      console.log("Track subscribed");
-      setStartTime(Date.now());
-    };
-
-    const handleTrackUnsubscribed = async () => {
-      console.log("Track unsubscribed");
-      if (startTime !== null) {
-        const endTime = Date.now();
-        const viewingTime = endTime - startTime; // in milliseconds
-        setStartTime(null);
-
-        console.log(viewingTime);
-        // Send viewing time to the server
-        await fetch("/api/track-viewing-time", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ streamId: stream.id, viewingTime }),
-        });
-      }
-    };
-
-    room.on(RoomEvent.TrackSubscribed, handleTrackSubscribed);
-    room.on(RoomEvent.TrackUnsubscribed, handleTrackUnsubscribed);
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        handleTrackUnsubscribed();
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      room.disconnect();
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [stream.id, startTime]);
   if (!token || !name || !identity) {
     return <StreamPlayerSkeleton />;
   }
@@ -134,7 +88,7 @@ export const StreamPlayer = ({
             followedByCount={user._count.followedBy}
           />
         </div>
-        <div className={cn("col-span-1", collapsed && "hidden")}>
+        <div className={cn("col-span-1 2xl:col-span-2", collapsed && "hidden")}>
           <Chat
             viewerName={name}
             hostName={user.username}
