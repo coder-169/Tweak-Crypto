@@ -111,7 +111,7 @@ const PaymentForm = () => {
   };
   return (
     <div className="relative bg-white m-0 p-12 w-full mx-auto h-full transform overflow-hidden rounded-lg text-left shadow-md transition-all">
-      <div className="!w-3/5 mx-auto text-center px-4 pb-4 pt-5 sm:p-6 sm:pb-4  mt-12">
+      <div className="!w-2/5 mx-auto text-center px-4 pb-4 pt-5 sm:p-6 sm:pb-4  mt-12">
         <h3 className="text-base font-semibold leading-6 text-white mt-4 mb-2">
           Deposit Liv Through Stripe
         </h3>
