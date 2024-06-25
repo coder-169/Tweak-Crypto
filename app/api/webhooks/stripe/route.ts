@@ -5,8 +5,7 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret =
-  "whsec_qpqU8vqzYdzoR4Gs8s5zkJ8UvUBbdp11";
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
 export async function POST(request:any, response:any) {
   const body = await request.json();
   const headerList = headers();
