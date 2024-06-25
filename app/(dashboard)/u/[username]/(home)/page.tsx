@@ -2,6 +2,8 @@ import { currentUser } from "@clerk/nextjs";
 
 import { getUserByUsername } from "@/lib/user-service";
 import { StreamPlayer } from "@/components/stream-player";
+import { isFollowingUser } from "@/lib/follow-service";
+import { isSubscribingUser } from "@/lib/subscribe-service";
 
 interface CreatorPageProps {
   params: {
@@ -19,12 +21,15 @@ const CreatorPage = async ({
     throw new Error("Unauthorized");
   }
 
+  const isFollowing = await isFollowingUser(user.id);
+  const isSubscribing = await isSubscribingUser(user.id);
   return ( 
     <div className="h-full">
       <StreamPlayer
         user={user}
         stream={user.stream}
-        isFollowing
+        isFollowing={isFollowing}
+        isSubscribing={isSubscribing}
       />
     </div>
   );
