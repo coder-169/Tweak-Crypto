@@ -144,7 +144,7 @@ const PaymentForm = () => {
               value={credits}
               name="credits"
               onChange={(e) => setCredits(e.target.value)}
-              placeholder="43284"
+              placeholder="Credits"
               type="text"
               className="w-1/2 rounded border border-gray-300  bg-transparent text-black mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
             />
