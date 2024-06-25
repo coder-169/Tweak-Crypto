@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loader";
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,200 @@ import {
   CurrencyEuroIcon,
 } from "@heroicons/react/24/outline";
 import { useChat } from "@livekit/components-react";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
+);
+import {
+  CardNumberElement,
+  CardCvcElement,
+  CardExpiryElement,
+  useElements,
+  useStripe,
+  Elements,
+} from "@stripe/react-stripe-js";
+const PaymentForm = ({
+  showPayment,
+  setShowPayment,
+  uId,
+}: {
+  showPayment: boolean;
+  setShowPayment: (value: boolean) => void;
+  uId: string;
+}) => {
+  const [paymentData, setPaymentData] = useState({ email: "", name: "" });
+  const [credits, setCredits] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handleChangePayment = (e: any) => {
+    setPaymentData({ ...paymentData, [e.target.name]: e.target.value });
+  };
+  const elements = useElements();
+  const stripe = useStripe();
+  const payNow = useRef(null);
+  const handlePayment = async () => {
+    setLoading(true);
+    toast.loading("Processing payment", { duration: 1500 });
+    try {
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...paymentData,
+          credits: parseInt(credits),
+          id: uId,
+        }),
+      };
+      const response = await fetch("/api/checkout_sessions", config);
+      const data = await response.json();
+      if (data.success) {
+        const { client_secret } = data;
+        console.log("🚀 ~ checkOut ~ data", data);
+        if (!stripe || !elements) return;
+        console.log("here");
+        const result = await stripe.confirmCardPayment(client_secret, {
+          payment_method: {
+            card: elements.getElement(CardNumberElement),
+            billing_details: {
+              name: paymentData.name,
+              email: paymentData.email,
+              address: {},
+            },
+          },
+        });
+        if (result.error) {
+          toast.error(result.error.message);
+        } else {
+          if (result.paymentIntent.status === "succeeded") {
+            toast.success("Payment successful");
+            const response = await fetch("/api/deposit/stripe", {
+              method: "POST",
+              body: JSON.stringify({
+                credits: parseInt(credits),
+                id: uId,
+              }),
+            });
+            const d = await response.json();
+            if (d.success) {
+              toast.success(credits + "Credits deposited successfully", {
+                duration: 2000,
+              });
+              window.location.href = "/profile";
+            } else {
+              toast.error(d.message);
+            }
+          } else {
+            toast.error(`Error while processing the payment`);
+          }
+        }
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+    setLoading(false);
+  };
+  return (
+    <Transition show={showPayment}>
+      <Dialog className="relative z-10" onClose={setShowPayment}>
+        <TransitionChild
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </TransitionChild>
 
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <TransitionChild
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                {loading ? (
+                  <div className="w-full h-48 text-center flex items-center">
+                    <span className="loader mb-4 block mx-auto"></span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="bg-white text-center px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                      <div className="text-center flex flex-col items-center justify-center">
+                        <div className="mt-3 flex flex-col items-center justify-center sm:mt-0 sm:text-left">
+                          <DialogTitle
+                            as="h3"
+                            className="text-base font-semibold leading-6 text-gray-900 mt-4 mb-2"
+                          >
+                            Deposit Liv Through Stripe
+                          </DialogTitle>
+                          <div className="mt-8">
+                            <div className="mt-2 w-full flex gap-2 items-center">
+                              <Input
+                                value={paymentData.email}
+                                onChange={handleChangePayment}
+                                placeholder="Email"
+                                name="email"
+                                type="email"
+                                className="rounded border border-gray-300 focus:border-gray-400 text-black bg-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                              />
+                              <Input
+                                value={credits}
+                                name="credits"
+                                onChange={(e) => setCredits(e.target.value)}
+                                placeholder="43284"
+                                type="text"
+                                className="rounded border border-gray-300 focus:border-gray-400 text-black bg-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                              />
+                            </div>
+                            <div className="mt-2 w-full flex gap-2 items-center">
+                              <CardNumberElement className="w-full rounded border p-3 border-gray-300 focus:border-gray-400 text-black bg-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
+                            </div>
+                            <div className="mt-2 w-full flex gap-2 items-center">
+                              <CardCvcElement className="w-1/2 rounded border p-3 border-gray-300 focus:border-gray-400 text-black bg-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
+                              <CardExpiryElement className="w-1/2 rounded border p-3 border-gray-300 focus:border-gray-400 text-black bg-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                      <button
+                        type="button"
+                        disabled={loading}
+                        className="disabled:opacity-50 disabled:cursor-not-allowed inline-flex w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 sm:ml-3 sm:w-auto"
+                        onClick={handlePayment}
+                        ref={payNow}
+                      >
+                        Pay
+                      </button>
+                      <button
+                        type="button"
+                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                        onClick={() => setShowPayment(false)}
+                        data-autofocus
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </>
+                )}
+              </DialogPanel>
+            </TransitionChild>
+          </div>
+        </div>
+      </Dialog>
+    </Transition>
+  );
+};
 const Buttons = ({ user }: { user: any }) => {
   const [open, setOpen] = useState(false);
   const [openWith, setOpenWith] = useState(false);
@@ -159,6 +352,38 @@ const Buttons = ({ user }: { user: any }) => {
     // Alert copied
     // alert("Address copied to clipboard: " + addressText.textContent);
   };
+  const [showPayOptions, setShowPayOptions] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const handleStripe = async () => {
+    if (parseInt(credits) <= 0) {
+      return toast.error("credits must be greater than 10");
+    }
+    const resp = await fetch("/api/checkout_sessions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        credits: parseInt(credits),
+        name: user?.username,
+        userId: user?.externalUserId,
+      }),
+    });
+    const data = await resp.json();
+    const session = data.session;
+    if (data.success) {
+      if (await stripePromise) {
+        (await stripePromise).redirectToCheckout({
+          sessionId: session.id,
+        });
+      }
+    } else {
+      toast.error(data.message);
+    }
+    setShowPayOptions(false);
+    // window.location.assign(data);
+  };
+
   useEffect(() => {
     if (localStorage.getItem("paymentDetails")) {
       const paymentDetails = localStorage.getItem("paymentDetails");
@@ -210,33 +435,58 @@ const Buttons = ({ user }: { user: any }) => {
             alignItems: "center",
           }}
         >
-          <Input
-            value={credits}
-            onChange={(e) => setCredits(e.target.value)}
-            placeholder="Credits"
-            max={user?.credits}
-            min={1}
-            type="number"
-            className="rounded-r-none mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-          />
-          <div className="flex gap-4 justify-between">
-            <Button
-              onClick={() => setOpenWith(true)}
-              variant={"primary"}
-              size={"sm"}
-              className="flex items-center gap-x-1 mr-2"
-            >
-              <span>Withdraw</span>
-            </Button>
-            <Button
-              variant={"outline"}
-              size={"sm"}
-              onClick={handleDeposit}
-              className="flex items-center gap-x-1 mr-2"
-            >
-              <span>Deposit</span>
-            </Button>
-          </div>
+          {!showPayOptions && (
+            <Input
+              value={credits}
+              onChange={(e) => setCredits(e.target.value)}
+              placeholder="Credits"
+              max={user?.credits}
+              min={1}
+              type="number"
+              className="rounded-r-none mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+            />
+          )}
+
+          {!showPayOptions ? (
+            <div className="flex gap-4 justify-between">
+              <Button
+                onClick={() => setOpenWith(true)}
+                variant={"primary"}
+                size={"sm"}
+                className="flex items-center gap-x-1 mr-2"
+              >
+                <span>Withdraw</span>
+              </Button>
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                onClick={() => setShowPayOptions(true)}
+                className="flex items-center gap-x-1 mr-2"
+              >
+                <span>Deposit</span>
+              </Button>
+            </div>
+          ) : (
+            <div className="flex gap-4 justify-between">
+              <Button
+                // onClick={() => setShowPayment(true)}
+                onClick={handleStripe}
+                variant={"primary"}
+                size={"sm"}
+                className="flex items-center gap-x-1 mr-2"
+              >
+                <span>Stripe</span>
+              </Button>
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                onClick={handleDeposit}
+                className="flex items-center gap-x-1 mr-2"
+              >
+                <span>Crypto</span>
+              </Button>
+            </div>
+          )}
           <Transition show={open}>
             <Dialog className="relative z-10" onClose={setOpen}>
               <TransitionChild
@@ -410,6 +660,11 @@ const Buttons = ({ user }: { user: any }) => {
               </div>
             </Dialog>
           </Transition>
+          <PaymentForm
+            setShowPayment={setShowPayment}
+            showPayment={showPayment}
+            uId={user?.externalUserId}
+          />
         </div>
       )}
     </div>
