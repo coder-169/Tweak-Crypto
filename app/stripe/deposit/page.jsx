@@ -15,6 +15,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { toast } from "sonner";
 import Loader from "@/components/ui/loader";
+import Link from "next/link";
 const ElementsProvider = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -90,7 +91,7 @@ const PaymentForm = () => {
             });
             const d = await response.json();
             if (d.success) {
-              toast.success(credits + "Credits deposited successfully", {
+              toast.success(credits + " Credits deposited successfully", {
                 duration: 2000,
               });
               window.location.href = "https://livepayout.org";
@@ -110,9 +111,13 @@ const PaymentForm = () => {
     setLoading(false);
   };
   return (
-    <div className="relative bg-white m-0 p-12 w-full mx-auto h-full transform overflow-hidden rounded-lg text-left shadow-md transition-all">
-      <div className="!w-2/5 mx-auto text-center px-4 pb-4 pt-5 sm:p-6 sm:pb-4  mt-12">
-        <h3 className="text-base font-semibold leading-6 text-white mt-4 mb-2">
+    <div className="relative bg-white m-0 py-32 px-12 w-full mx-auto h-full transform overflow-hidden rounded-lg text-left shadow-md transition-all">
+      <div className="half-at-mid w-1/2 mx-auto text-center px-4 pb-4 sm:p-6 sm:pb-4  pt-32">
+        <Link className="mb-16" href={'/'}>
+          <img src="/spooky.svg" className="w-32 h-40 mx-auto block" alt="" />
+          <span className="text-black">Live payout</span>
+        </Link>
+        <h3 className="text-base font-semibold leading-6 my-4 mb-8 text-black ">
           Deposit Liv Through Stripe
         </h3>
         <div className="mt-8">
@@ -153,14 +158,14 @@ const PaymentForm = () => {
           </div>
         </div>
       </div>
-      <div className="w-full">
+      <div className="half-at-mid w-1/2 mx-auto text-center">
         <button
           type="button"
           disabled={loading}
           className="disabled:opacity-50 w-1/2 mx-auto disabled:cursor-not-allowed block rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600"
           onClick={handlePayment}
         >
-          Pay
+          Pay {credits / 100 + "$"}
         </button>
       </div>
     </div>

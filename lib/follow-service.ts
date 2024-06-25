@@ -75,6 +75,34 @@ export const isFollowingUser = async (id: string) => {
     return false;
   }
 };
+export const isSubscribingUser = async (id: string) => {
+  try {
+    const self = await getSelf();
+
+    const otherUser = await db.user.findUnique({
+      where: { id },
+    });
+
+    if (!otherUser) {
+      throw new Error("User not found");
+    }
+
+    if (otherUser.id === self.id) {
+      return true;
+    }
+
+    const existingSubscriber = await db.subscriber.findFirst({
+      where: {
+        subscriberId: self.id,
+        subscribingId: otherUser.id,
+      },
+    });
+
+    return !!existingSubscriber;
+  } catch {
+    return false;
+  }
+};
 
 export const followUser = async (id: string) => {
   const self = await getSelf();

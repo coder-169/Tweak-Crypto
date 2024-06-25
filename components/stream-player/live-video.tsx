@@ -13,6 +13,7 @@ interface LiveVideoProps {
 }
 
 import { useChat } from "@livekit/components-react";
+import { toast } from "sonner";
 export const LiveVideo = ({ participant }: LiveVideoProps) => {
   const { send } = useChat();
   const onSubmit = (value: string) => {
@@ -56,6 +57,7 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
     console.log(data);
     if (data?.success) {
       onSubmit("Streamer received 10 Livs for being in the platform");
+      toast.success("You received 10 Livs for being in the platform");
     }
   };
   useEffect(() => {
@@ -63,7 +65,7 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
     const timing = setInterval(async () => {
       handleStreamTip();
       console.log("tip added");
-    }, 6000);
+    }, 600000);
     return () => clearInterval(timing);
   }, []);
 

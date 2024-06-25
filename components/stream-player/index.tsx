@@ -37,12 +37,14 @@ interface StreamPlayerProps {
   user: CustomUser;
   stream: CustomStream;
   isFollowing: boolean;
+  isSubscribing: boolean;
 }
 
 export const StreamPlayer = ({
   user,
   stream,
   isFollowing,
+  isSubscribing,
 }: StreamPlayerProps) => {
   const { token, name, identity } = useViewerToken(user.id);
   const { collapsed } = useChatSidebar((state) => state);
@@ -72,6 +74,7 @@ export const StreamPlayer = ({
             viewerIdentity={identity}
             imageUrl={user.imageUrl}
             isFollowing={isFollowing}
+            isSubscribing={isSubscribing}
             name={stream.name}
           />
           <InfoCard

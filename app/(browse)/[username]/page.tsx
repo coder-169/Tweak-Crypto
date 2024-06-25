@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { getUserByUsername } from "@/lib/user-service";
-import { isFollowingUser } from "@/lib/follow-service";
+import { isFollowingUser,isSubscribingUser } from "@/lib/follow-service";
 import { isBlockedByUser } from "@/lib/block-service";
 import { StreamPlayer } from "@/components/stream-player";
 
@@ -21,6 +21,7 @@ const UserPage = async ({
   }
 
   const isFollowing = await isFollowingUser(user.id);
+  const isSubscribing = await isSubscribingUser(user.id);
   const isBlocked = await isBlockedByUser(user.id);
 
   if (isBlocked) {
@@ -32,6 +33,7 @@ const UserPage = async ({
       user={user}
       stream={user.stream}
       isFollowing={isFollowing}
+      isSubscribing={isSubscribing}
     />
   );
 }
