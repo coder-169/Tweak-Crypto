@@ -24,7 +24,7 @@ import {
   CheckIcon,
   CurrencyEuroIcon,
 } from "@heroicons/react/24/outline";
-import { FaHeart, FaTrophy } from "react-icons/fa";
+import { FaHeart, FaRegStar, FaTrophy } from "react-icons/fa";
 
 interface ActionsProps {
   hostIdentity: string;
@@ -153,14 +153,14 @@ export const Actions = ({
         onClick={() => setOpen(true)}
         variant="primary"
         size="sm"
-        className="w-full lg:w-auto"
+        className="w-full lg:w-auto bg-purple-400 hover:bg-purple-500"
       >
-        {/* <Heart
+        <FaRegStar
           className={cn(
             "h-4 w-4 mr-2",
             isSubscribing ? "fill-white" : "fill-none"
           )}
-        /> */}
+        />
         {isSubscribing ? "Unsubscribe" : "Subscribe"}
       </Button>
       <Transition show={open}>
