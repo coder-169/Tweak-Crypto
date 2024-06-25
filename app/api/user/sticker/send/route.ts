@@ -7,13 +7,18 @@ export async function POST(req: Request) {
     const myuser = await currentUser();
     const body = await req.json();
     const { receiver, sticker, sendQty } = body;
-
+    console.log(myuser,receiver)
     if (myuser?.username === null) {
       return NextResponse.json({
         success: false,
         message: "Please login to buy ",
       });
     } else {
+      if (myuser?.username === receiver)
+        return NextResponse.json({
+          success: false,
+          message: "You Can not send to your self",
+        });
       const stickerSender = await db.user.findUnique({
         where: {
           username: myuser?.username,
@@ -93,7 +98,7 @@ export async function POST(req: Request) {
             username: receiver,
           },
           data: {
-            credits: stickerReceiver?.credits + (sendQty * 10),
+            credits: stickerReceiver?.credits + sendQty * 10,
           },
         });
       }
@@ -111,25 +116,25 @@ export async function POST(req: Request) {
             username: receiver,
           },
           data: {
-            credits: stickerReceiver?.credits + (1000 * sendQty),
+            credits: stickerReceiver?.credits + 1000 * sendQty,
           },
         });
       }
       if (sticker === 2) {
-      await db.user.update({
-        where: {
-          username: stickerSender?.username,
-        },
-        data: {
-          lions: stickerSender?.lions - sendQty,
-        },
-      });
+        await db.user.update({
+          where: {
+            username: stickerSender?.username,
+          },
+          data: {
+            lions: stickerSender?.lions - sendQty,
+          },
+        });
         await db.user.update({
           where: {
             username: receiver,
           },
           data: {
-            credits: stickerReceiver?.credits + (10000 * sendQty),
+            credits: stickerReceiver?.credits + 10000 * sendQty,
           },
         });
       }

@@ -57,8 +57,7 @@ export const ChatForm = ({
     imageUrl: "",
   });
   const getUser = async () => {
-    if(isHidden)
-      return 
+    if (isHidden) return;
     try {
       const res = await fetch("/api/user", { method: "GET" });
       const data = await res.json();
@@ -157,7 +156,7 @@ export const ChatForm = ({
       return toast.error("You don't have enough lions");
     if (sticker === 1 && e.target.value > user?.lions)
       return toast.error("You don't have enough coins");
-    if (sticker === 1 && e.target.value > user?.penguins)
+    if (sticker === 2 && e.target.value > user?.penguins)
       return toast.error("You don't have enough penguins");
     setSendQty(e.target.value);
   };
@@ -179,8 +178,8 @@ export const ChatForm = ({
       const data = await res.json();
       if (data.success) {
         setShowDropDown(false);
-        setBuySticker(-1)
-        setBuyQty(0)
+        setBuySticker(-1);
+        setBuyQty(0);
         if (sticker === 0) {
           toast.success(buyQty.toString() + " Coins(s) " + data.message);
         }
@@ -288,8 +287,7 @@ export const ChatForm = ({
 
   useEffect(() => {
     getUser();
-    console.log("called everytime");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (isHidden) {
     return null;
@@ -459,7 +457,7 @@ export const ChatForm = ({
                     <img
                       width={40}
                       height={40}
-                      src="https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18yaGxwZXVwRXVOSGREOXZGTWVWNVQwWUJZQmkifQ?width=80"
+                      src={user?.imageUrl}
                       alt=""
                       className="rounded-full"
                     />

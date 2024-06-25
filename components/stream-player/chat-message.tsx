@@ -89,7 +89,6 @@ export const ChatMessageTop = ({
   setName,
 }: ChatMessageProps) => {
   const color = stringToColor(data.from?.name || "");
-  console.log(data.message.split("img-livepayout-img")[1].split(" "));
   const handleMessageShow = (d: any) => {
     setMessage(d.message);
     setName(d.from?.name);

@@ -12,7 +12,14 @@ interface LiveVideoProps {
   participant: Participant;
 }
 
+import { useChat } from "@livekit/components-react";
 export const LiveVideo = ({ participant }: LiveVideoProps) => {
+  const { send } = useChat();
+  const onSubmit = (value: string) => {
+    console.log(send)
+    if (!send) return;
+    send(value);
+  };
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -37,14 +44,27 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
       videoRef.current.volume = isMuted ? 0.5 : 0;
     }
   };
-
+  const handleStreamTip = async () => {
+    const id = participant.identity;
+    const res = await fetch("/api/wallet/deposit/stream-tip", {
+      method: "POST",
+      body: JSON.stringify({
+        id: participant.identity,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+    if (data?.success) {
+      onSubmit("Streamer received 10 Livs for being in the platform");
+    }
+  };
   useEffect(() => {
     onVolumeChange(0);
-    const timing = setInterval(() => {
-      console.log(videoRef.current?.currentTime);
-
-    }, 5000);
-    return () => clearInterval(timing)
+    const timing = setInterval(async () => {
+      handleStreamTip();
+      console.log("tip added");
+    }, 6000);
+    return () => clearInterval(timing);
   }, []);
 
   const toggleFullscreen = () => {
