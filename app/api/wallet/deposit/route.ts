@@ -38,11 +38,12 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { credits } = body;
     const price_amount = parseInt(credits);
-    console.log( price_amount/100);
+    const newPrice =  price_amount/100;
+    console.log(newPrice)
     var data = JSON.stringify({
-      price_amount: price_amount / 100,
+      price_amount:newPrice,
       price_currency: "usdt",
-      pay_currency: "usdttrc20",
+      pay_currency: "bnbbsc",
       // pay_address:"TSyfA18d3sRctDb1vCj1fbpdp6r1B9CY6P",
       ipn_callback_url: "https://nowpayments.io",
       order_id: "RGDBP-21314",

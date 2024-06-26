@@ -32,6 +32,7 @@ import {
   Elements,
 } from "@stripe/react-stripe-js";
 import Link from "next/link";
+import { FaTimes } from "react-icons/fa";
 const Buttons = ({ user }: { user: any }) => {
   const [open, setOpen] = useState(false);
   const [openWith, setOpenWith] = useState(false);
@@ -243,7 +244,7 @@ const Buttons = ({ user }: { user: any }) => {
       </Button>
       {show && (
         <div
-          className={`absolute ${open && "opacity-0"} right-0 bg-gray-600 w-20`}
+          className={`absolute ${open && "opacity-0"} right-0 bg-gray-600 w-28`}
           style={{
             background: "#252731",
             width: "250px",
@@ -289,7 +290,7 @@ const Buttons = ({ user }: { user: any }) => {
               </Button>
             </div>
           ) : (
-            <div className="flex gap-4 justify-between">
+            <div className="flex gap-4 justify-around">
               <Button
                 // onClick={() => setShowPayment(true)}
                 variant={"primary"}
@@ -305,6 +306,14 @@ const Buttons = ({ user }: { user: any }) => {
                 className="flex items-center gap-x-1 mr-2"
               >
                 <span>Crypto</span>
+              </Button>
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                onClick={() => setShowPayOptions(false)}
+                className="flex items-center gap-x-1 mr-2"
+              >
+                <span>Edit</span>
               </Button>
             </div>
           )}
