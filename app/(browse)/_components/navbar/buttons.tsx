@@ -256,6 +256,7 @@ const Buttons = ({ user }: { user: any }) => {
             borderRadius: "12px",
             justifyContent: "center",
             alignItems: "center",
+            right: "-90%",
           }}
         >
           {!showPayOptions && (

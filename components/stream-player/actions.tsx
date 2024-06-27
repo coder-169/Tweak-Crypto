@@ -24,7 +24,7 @@ import {
   CheckIcon,
   CurrencyEuroIcon,
 } from "@heroicons/react/24/outline";
-import { FaHeart, FaRegStar, FaTrophy } from "react-icons/fa";
+import { FaHeart, FaRegStar, FaTrophy, FaStar } from "react-icons/fa";
 
 interface ActionsProps {
   hostIdentity: string;
@@ -155,13 +155,12 @@ export const Actions = ({
         size="sm"
         className="w-full lg:w-auto bg-purple-400 hover:bg-purple-500"
       >
-        <FaRegStar
-          className={cn(
-            "h-4 w-4 mr-2",
-            isSubscribing ? "fill-white" : "fill-none"
-          )}
-        />
-        {isSubscribing ? "Unsubscribe" : "Subscribe"}
+        {!isSubscribing ? (
+          <FaRegStar className={cn("h-4 w-4 mr-2", "fill-white")} />
+        ) : (
+          <FaStar className={cn("h-4 w-4 mr-2", "fill-white")} />
+        )}
+        {isSubscribing ? "Un Subscribe" : "Subscribe"}
       </Button>
       <Transition show={open}>
         <Dialog className="relative z-10" onClose={setOpen}>
@@ -201,7 +200,16 @@ export const Actions = ({
                         className="inline-flex w-full justify-center rounded-md bg-purple-400 px-2 py-2 text-xs font-semibold text-white shadow-sm hover:bg-purple-500 mt-2 sm:w-auto"
                         onClick={toggleSubscribe}
                       >
-                        {isSubscribing ? "Unsubscribe" : "Subscribe | 5000Liv"}
+                        {!isSubscribing ? (
+                          <FaRegStar
+                            className={cn("h-4 w-4 mr-2", "fill-white")}
+                          />
+                        ) : (
+                          <FaStar
+                            className={cn("h-4 w-4 mr-2", "fill-white")}
+                          />
+                        )}
+                        {isSubscribing ? "Un Subscribe" : "Subscribe | 5000Liv"}
                       </button>
                     </div>
                   </div>
