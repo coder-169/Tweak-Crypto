@@ -48,8 +48,8 @@ const Buttons = ({ user }: { user: any }) => {
   const handleDeposit = async () => {
     console.log("clicked");
     // setShow(false);
-    if (parseInt(credits) < 1 || credits === "")
-      return toast.error("Minimum deposit is 10 credits");
+    if (parseInt(credits) < 30 || credits === "")
+      return toast.error("Minimum deposit is 30 credits");
     setLoading(true);
     setOpen(true);
     try {

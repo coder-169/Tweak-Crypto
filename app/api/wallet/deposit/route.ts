@@ -48,7 +48,7 @@ export async function POST(req: Request) {
       ipn_callback_url: "https://nowpayments.io",
       order_id: "RGDBP-213142" + credits,
       order_description: "Crypto Payment for " + credits + " Liv Coins",
-    });
+  });
     const resp = await fetch("https://api.nowpayments.io/v1/payment", {
       method: "POST",
       headers: new Headers({
