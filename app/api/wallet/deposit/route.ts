@@ -38,25 +38,24 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { credits } = body;
     const price_amount = parseInt(credits);
-    const newPrice =  price_amount/100;
-    console.log(newPrice)
-    var data = JSON.stringify({
-      price_amount:newPrice,
-      price_currency: "usdt",
-      pay_currency: "bnbbsc",
+    const newPrice = price_amount / 100;
+    console.log(newPrice);
+    var json = JSON.stringify({
+      price_amount: newPrice,
+      price_currency: "USD",
+      pay_currency: "BNBBSC",
       // pay_address:"TSyfA18d3sRctDb1vCj1fbpdp6r1B9CY6P",
       ipn_callback_url: "https://nowpayments.io",
-      order_id: "RGDBP-21314",
-      order_description: "Apple Macbook Pro 2019 x 1",
+      order_id: "RGDBP-213142" + credits,
+      order_description: "Crypto Payment for " + credits + " Liv Coins",
     });
-
     const resp = await fetch("https://api.nowpayments.io/v1/payment", {
       method: "POST",
       headers: new Headers({
         "x-api-key": process.env.NOWAPIKEY || "",
         "Content-Type": "application/json",
       }),
-      body: data,
+      body: json,
     });
     const d = await resp.json();
     console.log(d);

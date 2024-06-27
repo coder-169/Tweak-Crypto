@@ -361,7 +361,7 @@ const Buttons = ({ user }: { user: any }) => {
                                   as="h3"
                                   className="text-base font-semibold leading-6 text-gray-900 mt-4 mb-2"
                                 >
-                                  Pay {paymentDetails?.pay_amount} USDT on
+                                  Pay {paymentDetails?.pay_amount} BNB on
                                   Address below
                                 </DialogTitle>
                                 <div className="mt-2 flex gap-2 items-center">
