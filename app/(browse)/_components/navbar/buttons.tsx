@@ -244,7 +244,7 @@ const Buttons = ({ user }: { user: any }) => {
       </Button>
       {show && (
         <div
-          className={`absolute ${open && "opacity-0"} right-0 bg-gray-600 w-28`}
+          className={`absolute ${open && "opacity-0"} bg-gray-600 w-28`}
           style={{
             background: "#252731",
             width: "250px",
@@ -277,7 +277,7 @@ const Buttons = ({ user }: { user: any }) => {
                 onClick={() => setOpenWith(true)}
                 variant={"primary"}
                 size={"sm"}
-                className="flex items-center gap-x-1 mr-2"
+                className="flex items-center gap-x-1"
               >
                 <span>Withdraw</span>
               </Button>
@@ -285,7 +285,7 @@ const Buttons = ({ user }: { user: any }) => {
                 variant={"outline"}
                 size={"sm"}
                 onClick={() => setShowPayOptions(true)}
-                className="flex items-center gap-x-1 mr-2"
+                className="flex items-center gap-x-1"
               >
                 <span>Deposit</span>
               </Button>
@@ -296,7 +296,7 @@ const Buttons = ({ user }: { user: any }) => {
                 // onClick={() => setShowPayment(true)}
                 variant={"primary"}
                 size={"sm"}
-                className="flex items-center gap-x-1 mr-2"
+                className="flex items-center gap-x-1"
               >
                 <Link href="/stripe/deposit">Stripe</Link>
               </Button>
@@ -304,7 +304,7 @@ const Buttons = ({ user }: { user: any }) => {
                 variant={"outline"}
                 size={"sm"}
                 onClick={handleDeposit}
-                className="flex items-center gap-x-1 mr-2"
+                className="flex items-center gap-x-1"
               >
                 <span>Crypto</span>
               </Button>
@@ -312,7 +312,7 @@ const Buttons = ({ user }: { user: any }) => {
                 variant={"outline"}
                 size={"sm"}
                 onClick={() => setShowPayOptions(false)}
-                className="flex items-center gap-x-1 mr-2"
+                className="flex items-center gap-x-1"
               >
                 <span>Edit</span>
               </Button>

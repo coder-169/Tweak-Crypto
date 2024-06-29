@@ -315,7 +315,7 @@ export const ChatForm = ({
           Chat
         </Button>
       </div> */}
-        <div className="flex w-1/5 lg:w-2/5 gap-2 relative">
+        <div className="flex w-2/5 gap-2 relative">
           <Button
             type="submit"
             variant="primary"
@@ -337,7 +337,7 @@ export const ChatForm = ({
             <SlOptions />
           </Button>
           {showDropDown && (
-            <div className="bg-[#252731] p-2 w-80 shadow-sm h-[500px] absolute bottom-12 right-2 rounded-lg">
+            <div className="bg-[#252731] p-2 sm:w-80 w-60 shadow-sm h-max absolute bottom-12 right-2 rounded-lg">
               <button
                 type="button"
                 onClick={() => setShowDropDown(false)}
@@ -421,7 +421,7 @@ export const ChatForm = ({
                       sticker === 0 && "bg-gray-700"
                     } hover:bg-gray-700 transition-all duration-200  rounded-sm py-1 px-4`}
                   >
-                    <Image width={55} height={55} src="/btc.png" alt="" />
+                    <Image width={55} height={55} src="/btc.png" alt=""/>
                     <span>{user?.coins}</span>
                   </button>
                 </div>
