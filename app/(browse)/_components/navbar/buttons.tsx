@@ -240,7 +240,7 @@ const Buttons = ({ user }: { user: any }) => {
       >
         <span>{user?.credits}</span>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/creds.png" width={22} alt="" />
+        <img src="/LV.png" width={22} alt="" />
       </Button>
       {show && (
         <div
@@ -277,7 +277,7 @@ const Buttons = ({ user }: { user: any }) => {
                 onClick={() => setOpenWith(true)}
                 variant={"primary"}
                 size={"sm"}
-                className="flex items-center gap-x-1"
+                className="flex items-center gap-x-1 bg-[#C181FF] hover:bg-[#a552ff]"
               >
                 <span>Withdraw</span>
               </Button>
@@ -296,7 +296,7 @@ const Buttons = ({ user }: { user: any }) => {
                 // onClick={() => setShowPayment(true)}
                 variant={"primary"}
                 size={"sm"}
-                className="flex items-center gap-x-1"
+                className="flex items-center gap-x-1 bg-[#C181FF] hover:bg-[#a552ff]"
               >
                 <Link href="/stripe/deposit">Stripe</Link>
               </Button>

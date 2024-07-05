@@ -31,6 +31,7 @@ export const Header = ({
   isSubscribing,
   name,
 }: HeaderProps) => {
+  console.log(hostIdentity)
   const participants = useParticipants();
   const participant = useRemoteParticipant(hostIdentity);
 

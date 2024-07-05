@@ -18,6 +18,7 @@ interface ResultCardProps {
 export const ResultCard = ({
   data,
 }: ResultCardProps) => {
+  console.log(data)
   return (
     <Link href={`/${data.user.username}`}>
       <div className="h-full w-full space-y-4">

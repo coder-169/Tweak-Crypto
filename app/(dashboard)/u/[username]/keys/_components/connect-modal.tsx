@@ -15,11 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Select,
   SelectContent,
@@ -30,8 +26,9 @@ import {
 
 const RTMP = String(IngressInput.RTMP_INPUT);
 const WHIP = String(IngressInput.WHIP_INPUT);
+const WEBRTC = String(IngressInput.URL_INPUT);
 
-type IngressType = typeof RTMP | typeof WHIP;
+type IngressType = typeof RTMP | typeof WHIP | typeof WEBRTC;
 
 export const ConnectModal = () => {
   const closeRef = useRef<ElementRef<"button">>(null);
@@ -46,15 +43,16 @@ export const ConnectModal = () => {
           closeRef?.current?.click();
         })
         .catch((err) => {
-          console.log(err)
-          toast.error("Something went wrong")});
+          console.log(err.message);
+          toast.error("Something went wrong");
+        });
     });
-  }
+  };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="primary">
+        <Button variant="primary" className="bg-[#C181FF] hover:bg-[#a552ff]">
           Generate connection
         </Button>
       </DialogTrigger>
@@ -73,26 +71,22 @@ export const ConnectModal = () => {
           <SelectContent>
             <SelectItem value={RTMP}>RTMP</SelectItem>
             <SelectItem value={WHIP}>WHIP</SelectItem>
+            <SelectItem value={WEBRTC}>WEBRTC</SelectItem>
           </SelectContent>
         </Select>
         <Alert>
           <AlertTriangle className="h-4 w-4" />
           <AlertTitle>Warning!</AlertTitle>
           <AlertDescription>
-            This action will reset all active streams using the current connection
+            This action will reset all active streams using the current
+            connection
           </AlertDescription>
         </Alert>
         <div className="flex justify-between">
           <DialogClose ref={closeRef} asChild>
-            <Button variant="ghost">
-              Cancel
-            </Button>
+            <Button variant="ghost">Cancel</Button>
           </DialogClose>
-          <Button
-            disabled={isPending}
-            onClick={onSubmit}
-            variant="primary"
-          >
+          <Button disabled={isPending} onClick={onSubmit} variant="primary" className="bg-[#C181FF] hover:bg-[#a552ff]">
             Generate
           </Button>
         </div>

@@ -8,7 +8,7 @@ body,
 :root {
   font-family: "Poppins", sans-serif;
   height: 100%;
-  @apply bg-neutral-900/80;
+  @apply bg-[#141414];
 }
 
 .hidden-scrollbar {

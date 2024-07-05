@@ -23,7 +23,7 @@ export const Actions = async () => {
       {user && <Buttons user={userdata} />}
       {!user && (
         <SignInButton>
-          <Button size="sm" variant="primary">
+          <Button size="sm" variant="primary" className="bg-[#C181FF] hover:bg-[#a552ff]">
             Login
           </Button>
         </SignInButton>

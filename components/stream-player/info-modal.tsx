@@ -146,7 +146,8 @@ export const InfoModal = ({
             <Button
               disabled={isPending}
               variant="primary"
-              type="submit"
+              className="bg-[#C181FF] hover:bg-[#a552ff]"
+
             >
               Save
             </Button>

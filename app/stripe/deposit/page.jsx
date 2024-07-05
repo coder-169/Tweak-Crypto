@@ -110,14 +110,30 @@ const PaymentForm = () => {
     }
     setLoading(false);
   };
+  const cardStyle = {
+    style: {
+      base: {
+        color: "#fff", // Set your desired text color
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#aab7c4", // Set your desired placeholder color
+        },
+      },
+      invalid: {
+        color: "#fa755a", // Set your desired color for invalid input
+        iconColor: "#fa755a",
+      },
+    },
+  };
   return (
-    <div className="relative bg-white m-0 py-32 px-12 w-full mx-auto h-full transform overflow-hidden rounded-lg text-left shadow-md transition-all">
+    <div className="relative m-0 py-32 px-12 w-full mx-auto h-full transform overflow-hidden rounded-lg text-left shadow-md transition-all">
       <div className="half-at-mid w-1/2 mx-auto text-center px-4 pb-4 sm:p-6 sm:pb-4  pt-32">
-        <Link className="mb-16" href={'/'}>
-          <img src="/spooky.svg" className="w-32 h-40 mx-auto block" alt="" />
-          <span className="text-black">Live payout</span>
+        <Link className="mb-16" href={"/"}>
+          <img src="/logo.png" className="w-60 mx-auto block" alt="" />
         </Link>
-        <h3 className="text-base font-semibold leading-6 my-4 mb-8 text-black ">
+        <h3 className="text-base font-semibold leading-6 my-4 mb-8 mt-8 pt-8 ">
           Deposit Liv Through Stripe
         </h3>
         <div className="mt-8">
@@ -128,7 +144,7 @@ const PaymentForm = () => {
               placeholder="Email"
               name="email"
               type="email"
-              className="rounded border border-gray-300   bg-transparent text-black  mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+              className="rounded border border-gray-300   bg-transparent  mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
             />
           </div>
           <div className="mt-2 w-full flex gap-2 items-center">
@@ -138,23 +154,23 @@ const PaymentForm = () => {
               placeholder="Name"
               name="name"
               type="text"
-              className="w-1/2 rounded border border-gray-300   bg-transparent text-black mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+              className="w-1/2 rounded border border-gray-300   bg-transparent  mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
             />
             <Input
               value={credits}
               name="credits"
               onChange={(e) => setCredits(e.target.value)}
               placeholder="Credits"
-              type="text"
-              className="w-1/2 rounded border border-gray-300  bg-transparent text-black mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+              type="number"
+              className="w-1/2 rounded border border-gray-300  bg-transparent mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
             />
           </div>
           <div className="mt-2 w-full flex gap-2 items-center">
-            <CardNumberElement className="w-full rounded border p-3 border-gray-300 focus:border-gray-400 !text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
+            <CardNumberElement options={cardStyle} className="w-full rounded border p-3 border-gray-300 focus:border-gray-400 !text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
           </div>
           <div className="mt-2 w-full flex gap-2 items-center">
-            <CardCvcElement className="w-1/2 rounded border p-3 border-gray-300 focus:border-gray-400 text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
-            <CardExpiryElement className="w-1/2 rounded border p-3 border-gray-300 focus:border-gray-400 text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
+            <CardCvcElement options={cardStyle} className="w-1/2 rounded border p-3 border-gray-300 focus:border-gray-400 text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
+            <CardExpiryElement options={cardStyle} className="w-1/2 rounded border p-3 border-gray-300 focus:border-gray-400 text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
           </div>
         </div>
       </div>
@@ -162,7 +178,7 @@ const PaymentForm = () => {
         <button
           type="button"
           disabled={loading}
-          className="disabled:opacity-50 w-1/2 mx-auto disabled:cursor-not-allowed block rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600"
+          className="disabled:opacity-50 w-1/2 mx-auto disabled:cursor-not-allowed block bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600"
           onClick={handlePayment}
         >
           Pay {credits / 100 + "$"}

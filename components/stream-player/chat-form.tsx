@@ -320,7 +320,7 @@ export const ChatForm = ({
             type="submit"
             variant="primary"
             size="sm"
-            className="w-1/2 text-center bg-purple-400 hover:bg-purple-500 rounded-full px-2 p-1"
+            className="w-1/2 text-center bg-[#C181FF] hover:bg-[#a552ff] rounded-full px-2 p-1"
           >
             <BsFillSendFill />
           </Button>
@@ -332,7 +332,7 @@ export const ChatForm = ({
             type="button"
             variant="primary"
             size="sm"
-            className="w-1/2 text-center bg-purple-400 hover:bg-purple-500 rounded-full px-2 p-1"
+            className="w-1/2 text-center bg-[#C181FF] hover:bg-[#a552ff] rounded-full px-2 p-1"
           >
             <SlOptions />
           </Button>
@@ -401,7 +401,7 @@ export const ChatForm = ({
                     className="w-full bg-[#252731] text-white outline-none border-white/10 transition-all duration-200 focus:border-purple-400 border p-1 rounded-sm text-xs"
                   />
                   <button
-                    className="w-full text-xs bg-purple-400 disabled:opacity-70 px-1 py-1 rounded-lg"
+                    className="w-full text-xs bg-[#C181FF] disabled:opacity-70 px-1 py-1 rounded-lg"
                     type="button"
                     disabled={buySticker === -1}
                     onClick={() => buyStickerShop(buySticker)}
@@ -484,7 +484,7 @@ export const ChatForm = ({
                           <span className="sm-loader"></span>
                         ) : (
                           <button
-                            className="w-1/2 text-xs bg-purple-400 px-1 py-1 rounded-lg disabled:opacity-70"
+                            className="w-1/2 text-xs bg-[#C181FF] px-1 py-1 rounded-lg disabled:opacity-70"
                             type="button"
                             disabled={sticker === -1 || sendQty <= 0}
                             onClick={() => sendSticker()}

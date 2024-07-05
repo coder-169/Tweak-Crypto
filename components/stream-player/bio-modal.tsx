@@ -69,6 +69,7 @@ export const BioModal = ({
               disabled={isPending}
               type="submit"
               variant="primary"
+              className="bg-[#C181FF] hover:bg-[#a552ff]"
             >
               Save
             </Button>

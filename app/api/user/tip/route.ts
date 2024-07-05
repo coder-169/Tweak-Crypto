@@ -5,6 +5,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { receiver, sender, tip } = body;
+    console.log(body)
     const tipReceiver = await db.user.findUnique({
       where: {
         username: receiver,
