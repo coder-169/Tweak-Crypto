@@ -264,8 +264,6 @@ const Buttons = ({ user }: { user: any }) => {
               value={credits}
               onChange={(e) => setCredits(e.target.value)}
               placeholder="Credits"
-              max={user?.credits}
-              min={1}
               type="number"
               className="rounded-r-none mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
             />
@@ -277,7 +275,7 @@ const Buttons = ({ user }: { user: any }) => {
                 onClick={() => setOpenWith(true)}
                 variant={"primary"}
                 size={"sm"}
-                className="flex items-center gap-x-1 bg-[#C181FF] hover:bg-[#a552ff]"
+                className="rounded-none flex items-center gap-x-1 bg-[#C181FF] hover:bg-[#a552ff]"
               >
                 <span>Withdraw</span>
               </Button>
@@ -285,7 +283,7 @@ const Buttons = ({ user }: { user: any }) => {
                 variant={"outline"}
                 size={"sm"}
                 onClick={() => setShowPayOptions(true)}
-                className="flex items-center gap-x-1"
+                className="rounded-none flex items-center gap-x-1"
               >
                 <span>Deposit</span>
               </Button>
@@ -296,7 +294,7 @@ const Buttons = ({ user }: { user: any }) => {
                 // onClick={() => setShowPayment(true)}
                 variant={"primary"}
                 size={"sm"}
-                className="flex items-center gap-x-1 bg-[#C181FF] hover:bg-[#a552ff]"
+                className="rounded-none  flex items-center gap-x-1 bg-[#C181FF] hover:bg-[#a552ff]"
               >
                 <Link href="/stripe/deposit">Stripe</Link>
               </Button>
@@ -304,7 +302,7 @@ const Buttons = ({ user }: { user: any }) => {
                 variant={"outline"}
                 size={"sm"}
                 onClick={handleDeposit}
-                className="flex items-center gap-x-1"
+                className="rounded-none  flex items-center gap-x-1"
               >
                 <span>Crypto</span>
               </Button>
@@ -312,7 +310,7 @@ const Buttons = ({ user }: { user: any }) => {
                 variant={"outline"}
                 size={"sm"}
                 onClick={() => setShowPayOptions(false)}
-                className="flex items-center gap-x-1"
+                className="rounded-none  flex items-center gap-x-1"
               >
                 <span>Edit</span>
               </Button>
@@ -390,7 +388,7 @@ const Buttons = ({ user }: { user: any }) => {
                           <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                             <button
                               type="button"
-                              className="inline-flex w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 sm:ml-3 sm:w-auto"
+                              className="inline-flex w-full justify-center rounded-none bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 sm:ml-3 sm:w-auto"
                               onClick={() =>
                                 checkPaid(paymentDetails?.payment_id)
                               }
@@ -399,7 +397,7 @@ const Buttons = ({ user }: { user: any }) => {
                             </button>
                             <button
                               type="button"
-                              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                              className="mt-3 inline-flex w-full justify-center rounded-none bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                               onClick={() => setOpen(false)}
                               data-autofocus
                             >
@@ -469,14 +467,14 @@ const Buttons = ({ user }: { user: any }) => {
                           <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                             <button
                               type="button"
-                              className="inline-flex w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 sm:ml-3 sm:w-auto"
+                              className="inline-flex w-full justify-center rounded-none bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 sm:ml-3 sm:w-auto"
                               onClick={handleWithdraw}
                             >
                               Withdraw
                             </button>
                             <button
                               type="button"
-                              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                              className="mt-3 inline-flex w-full justify-center rounded-none bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                               onClick={() => setOpenWith(false)}
                               data-autofocus
                             >
