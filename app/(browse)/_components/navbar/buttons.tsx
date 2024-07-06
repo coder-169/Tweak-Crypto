@@ -33,6 +33,9 @@ import {
 } from "@stripe/react-stripe-js";
 import Link from "next/link";
 import { FaTimes } from "react-icons/fa";
+import { BiBitcoin, BiMoneyWithdraw, BiCreditCardAlt } from "react-icons/bi";
+import { IoCaretBack } from "react-icons/io5";
+
 const Buttons = ({ user }: { user: any }) => {
   const [open, setOpen] = useState(false);
   const [openWith, setOpenWith] = useState(false);
@@ -247,7 +250,7 @@ const Buttons = ({ user }: { user: any }) => {
           className={`absolute ${open && "opacity-0"} bg-gray-600 w-28`}
           style={{
             background: "#252731",
-            width: "250px",
+            width: "300px",
             padding: "15px",
             textAlign: "center",
             display: "flex",
@@ -275,16 +278,18 @@ const Buttons = ({ user }: { user: any }) => {
                 onClick={() => setOpenWith(true)}
                 variant={"primary"}
                 size={"sm"}
-                className="rounded-none flex items-center gap-x-1 bg-[#C181FF] hover:bg-[#a552ff]"
+                className="rounded-sm flex items-center gap-x-1 bg-[#C181FF] hover:bg-[#a552ff]"
               >
+                <BiMoneyWithdraw className="w-4 h-4" />
                 <span>Withdraw</span>
               </Button>
               <Button
                 variant={"outline"}
                 size={"sm"}
                 onClick={() => setShowPayOptions(true)}
-                className="rounded-none flex items-center gap-x-1"
+                className="rounded-sm flex items-center gap-x-1"
               >
+                <BiCreditCardAlt className="w-4 h-4" />
                 <span>Deposit</span>
               </Button>
             </div>
@@ -294,25 +299,28 @@ const Buttons = ({ user }: { user: any }) => {
                 // onClick={() => setShowPayment(true)}
                 variant={"primary"}
                 size={"sm"}
-                className="rounded-none  flex items-center gap-x-1 bg-[#C181FF] hover:bg-[#a552ff]"
+                className="rounded-sm  flex items-center gap-x-1 bg-[#C181FF] hover:bg-[#a552ff]"
               >
-                <Link href="/stripe/deposit">Stripe</Link>
+                <BiCreditCardAlt className="w-4 h-4" />
+                <Link href="/stripe/deposit">Card</Link>
               </Button>
               <Button
                 variant={"outline"}
                 size={"sm"}
                 onClick={handleDeposit}
-                className="rounded-none  flex items-center gap-x-1"
+                className="rounded-sm  flex items-center gap-x-1"
               >
+                <BiBitcoin className="w-4 h-4" />
                 <span>Crypto</span>
               </Button>
               <Button
                 variant={"outline"}
                 size={"sm"}
                 onClick={() => setShowPayOptions(false)}
-                className="rounded-none  flex items-center gap-x-1"
+                className="rounded-sm  flex items-center gap-x-1"
               >
-                <span>Edit</span>
+                <IoCaretBack className="w-4 h-4" />
+                <span>Back</span>
               </Button>
             </div>
           )}
@@ -346,18 +354,18 @@ const Buttons = ({ user }: { user: any }) => {
                         </div>
                       ) : (
                         <>
-                          <div className="bg-white text-center px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                          <div className="bg-[#2b2b2b] text-white text-center px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                             <div className="text-center flex flex-col items-center justify-center">
-                              <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                              <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-purple-100 sm:mx-0 sm:h-10 sm:w-10">
                                 <CurrencyDollarIcon
-                                  className="h-6 w-6 text-blue-600"
+                                  className="h-6 w-6 text-[#C181FF]"
                                   aria-hidden="true"
                                 />
                               </div>
                               <div className="mt-3 flex flex-col items-center justify-center sm:ml-4 sm:mt-0 sm:text-left">
                                 <DialogTitle
                                   as="h3"
-                                  className="text-base font-semibold leading-6 text-gray-900 mt-4 mb-2"
+                                  className="text-base font-semibold leading-6 text-white mt-4 mb-2"
                                 >
                                   Pay {paymentDetails?.pay_amount} BNB on
                                   Address below
@@ -370,13 +378,13 @@ const Buttons = ({ user }: { user: any }) => {
                                     {paymentDetails?.pay_address}
                                   </p>
                                   {isCopied ? (
-                                    <button className="text-gray-800 rounded-sm bg-gray-200">
+                                    <button className="text-white rounded-sm bg-black/50">
                                       <CheckIcon className="h-6 w-6 p-1" />
                                     </button>
                                   ) : (
                                     <button
                                       onClick={copyAddress}
-                                      className="text-gray-800 rounded-sm bg-gray-200"
+                                      className="text-white rounded-sm bg-black/50"
                                     >
                                       <ClipboardIcon className="h-6 w-6 p-1" />
                                     </button>
@@ -385,24 +393,31 @@ const Buttons = ({ user }: { user: any }) => {
                               </div>
                             </div>
                           </div>
-                          <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                            <button
+                          <div className="bg-[#2b2b2b] px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                            <Button
+                              variant="primary"
                               type="button"
-                              className="inline-flex w-full justify-center rounded-none bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 sm:ml-3 sm:w-auto"
+                              className="ml-4 rounded-sm bg-[#C181FF] hover:bg-[#a552FF]"
                               onClick={() =>
                                 checkPaid(paymentDetails?.payment_id)
                               }
                             >
                               Paid
-                            </button>
-                            <button
+                            </Button>
+                            {/* <button
                               type="button"
-                              className="mt-3 inline-flex w-full justify-center rounded-none bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                              onClick={() => setOpen(false)}
+                              className="mt-3 inline-flex w-full justify-center rounded-sm bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                               data-autofocus
                             >
                               Cancel
-                            </button>
+                            </button> */}
+                            <Button
+                              onClick={() => setOpen(false)}
+                              type="button"
+                              variant="ghost"
+                            >
+                              Cancel
+                            </Button>
                           </div>
                         </>
                       )}
@@ -442,14 +457,14 @@ const Buttons = ({ user }: { user: any }) => {
                         </div>
                       ) : (
                         <>
-                          <div className="bg-white text-center px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                          <div className="bg-[#212121] text-center px-4 pb-4 pt-5 sm:p-6 sm:pb-4 text-white">
                             <div className="text-center flex flex-col items-center justify-center">
                               <div className="mt-3 flex flex-col items-center justify-center sm:ml-4 sm:mt-0 sm:text-left">
                                 <DialogTitle
                                   as="h3"
-                                  className="text-base font-semibold leading-6 text-gray-900 mt-4 mb-2"
+                                  className="text-base font-semibold leading-6 mt-4 mb-2"
                                 >
-                                  for Withdrawn of {credits} USDT enter address
+                                  For Withdrawn of {credits} USDT enter address
                                   below
                                 </DialogTitle>
                                 <div className="mt-2 w-full flex gap-2 items-center">
@@ -458,28 +473,38 @@ const Buttons = ({ user }: { user: any }) => {
                                     onChange={(e) => setAddress(e.target.value)}
                                     placeholder="0x432989v84hfasd3423dalfjdoi3"
                                     type="text"
-                                    className="rounded border border-gray-300 focus:border-gray-400 text-black bg-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                                    className="rounded border border-transparent focus:border-gray-400 bg-[#2d2d2d] text-white  mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                                   />
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                            <button
+                          <div className="bg-[#212121] px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                            <Button
+                              variant="primary"
                               type="button"
-                              className="inline-flex w-full justify-center rounded-none bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 sm:ml-3 sm:w-auto"
+                              className="ml-4 rounded-sm bg-[#C181FF] hover:bg-[#a552FF]"
                               onClick={handleWithdraw}
                             >
                               Withdraw
-                            </button>
-                            <button
+                            </Button>
+                            {/* <button
                               type="button"
-                              className="mt-3 inline-flex w-full justify-center rounded-none bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                              className="mt-3 inline-flex w-full justify-center rounded-sm bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                               onClick={() => setOpenWith(false)}
                               data-autofocus
                             >
                               Cancel
-                            </button>
+                            </button> */}
+                            <Button
+                              onClick={() => setOpenWith(false)}
+                              data-autofocus
+                              type="button"
+                              variant={"ghost"}
+                            >
+                              {" "}
+                              Cancel
+                            </Button>
                           </div>
                         </>
                       )}

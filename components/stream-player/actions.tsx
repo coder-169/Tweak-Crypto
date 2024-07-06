@@ -138,7 +138,11 @@ export const Actions = ({
         onClick={toggleFollow}
         variant="primary"
         size="sm"
-        className="w-full rounded-none lg:w-auto bg-[#C181FF] hover:bg-[#C181FF]"
+        className={`w-full rounded-sm lg:w-auto ${
+          isFollowing
+            ? "text-white bg-white/10"
+            : "bg-[#C181FF] hover:bg-[#C181FF]"
+        } `}
       >
         <Heart
           className={cn(
@@ -146,14 +150,18 @@ export const Actions = ({
             isFollowing ? "fill-white" : "fill-none"
           )}
         />
-        {isFollowing ? "Unfollow" : "Follow"}
+        {isFollowing ? "Un follow" : "Follow"}
       </Button>
       <Button
         disabled={isPending || isHost}
         onClick={() => setOpen(true)}
         variant="primary"
         size="sm"
-        className="w-full rounded-none lg:w-auto bg-[#C181FF] hover:bg-[#C181FF]"
+        className={`w-full rounded-sm lg:w-auto ${
+          isSubscribing
+            ? "text-white bg-white/10"
+            : "bg-[#C181FF] hover:bg-[#C181FF]"
+        } `}
       >
         {!isSubscribing ? (
           <FaRegStar className={cn("h-4 w-4 mr-2", "fill-white")} />
@@ -197,7 +205,11 @@ export const Actions = ({
                       <h3 className="text-lg font">{name}</h3>
                       <button
                         type="button"
-                        className="inline-flex w-full justify-center rounded-md bg-[#C181FF] px-2 py-2 text-xs font-semibold text-white shadow-sm hover:bg-[#C181FF] mt-2 sm:w-auto"
+                        className={`inline-flex w-full justify-center rounded-md px-2 py-2 text-xs font-semibold text-white shadow-sm ${
+                          isSubscribing
+                            ? "text-white bg-white/10"
+                            : "bg-[#C181FF] hover:bg-[#C181FF]"
+                        } mt-2 sm:w-auto`}
                         onClick={toggleSubscribe}
                       >
                         {!isSubscribing ? (

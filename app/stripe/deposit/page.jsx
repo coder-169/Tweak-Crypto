@@ -131,7 +131,8 @@ const PaymentForm = () => {
     <div className="relative m-0 py-32 px-12 w-full mx-auto h-full transform overflow-hidden rounded-lg text-left shadow-md transition-all">
       <div className="half-at-mid w-1/2 mx-auto text-center px-4 pb-4 sm:p-6 sm:pb-4  pt-32">
         <Link className="mb-16" href={"/"}>
-          <img src="/logo.png" className="w-60 mx-auto block" alt="" />
+          {/*eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/coin.png" className="w-20 mx-auto block" alt="" />
         </Link>
         <h3 className="text-base font-semibold leading-6 my-4 mb-8 mt-8 pt-8 ">
           Deposit Liv Through Stripe
@@ -166,11 +167,20 @@ const PaymentForm = () => {
             />
           </div>
           <div className="mt-2 w-full flex gap-2 items-center">
-            <CardNumberElement options={cardStyle} className="w-full rounded border p-3 border-gray-300 focus:border-gray-400 !text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
+            <CardNumberElement
+              options={cardStyle}
+              className="w-full rounded border p-3 border-gray-300 focus:border-gray-400 !text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+            />
           </div>
           <div className="mt-2 w-full flex gap-2 items-center">
-            <CardCvcElement options={cardStyle} className="w-1/2 rounded border p-3 border-gray-300 focus:border-gray-400 text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
-            <CardExpiryElement options={cardStyle} className="w-1/2 rounded border p-3 border-gray-300 focus:border-gray-400 text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
+            <CardCvcElement
+              options={cardStyle}
+              className="w-1/2 rounded border p-3 border-gray-300 focus:border-gray-400 text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+            />
+            <CardExpiryElement
+              options={cardStyle}
+              className="w-1/2 rounded border p-3 border-gray-300 focus:border-gray-400 text-white mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+            />
           </div>
         </div>
       </div>
@@ -178,10 +188,10 @@ const PaymentForm = () => {
         <button
           type="button"
           disabled={loading}
-          className="disabled:opacity-50 w-1/2 mx-auto disabled:cursor-not-allowed block bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600"
+          className="disabled:opacity-50 w-1/2 mx-auto disabled:cursor-not-allowed block bg-[#C181FF] hover:bg-[#a552ff]  px-3 py-2 text-sm font-semibold text-white shadow-sm rounded-sm"
           onClick={handlePayment}
         >
-          Pay {credits / 100 + "$"}
+          <span className="!font-bold">Pay</span> Now {credits / 100 + "$"}
         </button>
       </div>
     </div>

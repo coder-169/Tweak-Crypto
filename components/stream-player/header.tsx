@@ -72,7 +72,7 @@ export const Header = ({
           )}
         </div>
       </div>
-      <Actions
+    <Actions
         isFollowing={isFollowing}
         isSubscribing={isSubscribing}
         hostIdentity={hostIdentity}

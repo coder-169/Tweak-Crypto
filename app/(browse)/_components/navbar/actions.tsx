@@ -5,7 +5,6 @@ import { SignInButton, UserButton, currentUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import Buttons from "./buttons";
-
 export const Actions = async () => {
   const user = await currentUser();
   // console.log(user.id);
@@ -23,7 +22,7 @@ export const Actions = async () => {
       {user && <Buttons user={userdata} />}
       {!user && (
         <SignInButton>
-          <Button size="sm" variant="primary" className="bg-[#C181FF] hover:bg-[#a552ff] rounded-none">
+          <Button size="sm" variant="primary" className="bg-[#C181FF] hover:bg-[#a552ff] rounded-sm">
             Login
           </Button>
         </SignInButton>
