@@ -31,46 +31,54 @@ export const isSubscribingUser = async (id: string) => {
   }
 };
 
+
 export const subscribeUser = async (id: string) => {
-  const self = await getSelf();
+  try {
+    const self = await getSelf();
 
-  const otherUser = await db.user.findUnique({
-    where: { id },
-  });
+    const otherUser = await db.user.findUnique({
+      where: { id },
+    });
 
-  if (!otherUser) {
-    throw new Error("User not found");
+    if (!otherUser) {
+      console.error("User not found with id:", id);
+      throw new Error("User not found");
+    }
+
+    if (otherUser.id === self.id) {
+      console.error("Attempted to subscribe to self:", self.id);
+      throw new Error("Cannot subscribe to yourself");
+    }
+
+    const existingSubscriber = await db.subscriber.findFirst({
+      where: {
+        subscriberId: self.id,
+        subscribingId: otherUser.id,
+      },
+    });
+
+    if (existingSubscriber) {
+      console.error("Already subscribed:", existingSubscriber);
+      throw new Error("Already Subscribed");
+    }
+
+    const subscribe = await db.subscriber.create({
+      data: {
+        subscriberId: self.id,
+        subscribingId: otherUser.id,
+      },
+      include: {
+        subscriber: true,
+        subscribing: true,
+      },
+    });
+
+    return subscribe;
+  } catch (error) {
+    console.error("Error in subscribeUser:", error);
+    throw new Error("Internal Error");
   }
-
-  if (otherUser.id === self.id) {
-    throw new Error("Cannot follow yourself");
-  }
-
-  const existingSubscriber = await db.subscriber.findFirst({
-    where: {
-      subscriberId: self.id,
-      subscribingId: otherUser.id,
-    },
-  });
-
-  if (existingSubscriber) {
-    throw new Error("Already Subscribed");
-  }
-
-  const subscribe = await db.subscriber.create({
-    data: {
-      subscriberId: self.id,
-      subscribingId: otherUser.id,
-    },
-    include: {
-      subscriber: true,
-      subscribing: true,
-    },
-  });
-
-  return subscribe;
 };
-
 export const unSubscribeUser = async (id: string) => {
   const self = await getSelf();
 

@@ -69,16 +69,15 @@ export const Actions = ({
   const handleSubscribe = () => {
     startTransition(() => {
       onSubscribe(hostIdentity)
-        .then((data) =>
-          toast.success(`You have Subscribed ${data.subscribing.username}`)
-        )
+        .then((data) => {
+          toast.success(`You have Subscribed ${data.subscribing.username}`);
+        })
         .catch((err) => {
-          console.log(err);
+          console.error("Error in handleSubscribe:", err);
           toast.error("Something went wrong");
         });
     });
   };
-
   const handleUnSubscribe = () => {
     startTransition(() => {
       onUnSubscribe(hostIdentity)

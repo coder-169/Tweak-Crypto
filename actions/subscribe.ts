@@ -9,14 +9,14 @@ export const onSubscribe = async (id: string) => {
     const subscribedUser = await subscribeUser(id);
 
     revalidatePath("/");
-
     if (subscribedUser) {
       revalidatePath(`/${subscribedUser.subscribing.username}`);
     }
 
     return subscribedUser;
   } catch (error) {
-    throw new Error("Interal Error");
+    console.error("Error in onSubscribe:", error);
+    throw new Error("Internal Error");
   }
 };
 
