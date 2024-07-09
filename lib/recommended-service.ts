@@ -45,7 +45,7 @@ export const getRecommended = async () => {
       include: {
         stream: {
           select: {
-            isLive: true,
+            isLive: true,   
           },
         },
       },

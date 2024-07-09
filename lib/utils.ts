@@ -27,16 +27,13 @@ export const sendMoney = async (params: any) => {
     let query = Object.keys(params)
       .map((key) => `${key}=${encodeURIComponent(params[key])}`)
       .join("&");
-    console.log(process.env.WALLET_API_KEY, process.env.WALLET_SECRET_KEY);
     const signature = crypto
       .createHmac("sha256", process.env.WALLET_SECRET_KEY || "")
       .update(query)
       .digest("hex");
-    console.log(signature);
     query += `&signature=${signature}`;
     const url =
       "https://api.binance.com/sapi/v1/capital/withdraw/apply?" + query;
-    console.log(url);
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -45,14 +42,12 @@ export const sendMoney = async (params: any) => {
       },
     });
     const data = await response.json();
-    console.log(data);
     if (response.status === 200) {
       return { data, error: false };
     } else {
       return { message: data.msg, error: true };
     }
   } catch (error: any) {
-    console.log(error);
     return { error: true, message: error.message };
   }
 };

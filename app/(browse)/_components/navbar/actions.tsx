@@ -7,7 +7,6 @@ import { db } from "@/lib/db";
 import Buttons from "./buttons";
 export const Actions = async () => {
   const user = await currentUser();
-  // console.log(user.id);
   let userdata = null;
   if (user) {
     userdata = await db.user.findUnique({

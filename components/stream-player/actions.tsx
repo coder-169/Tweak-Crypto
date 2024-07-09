@@ -71,9 +71,9 @@ export const Actions = ({
       onSubscribe(hostIdentity)
         .then((data) =>
           toast.success(`You have Subscribed ${data.subscribing.username}`)
-        ).
-        catch((err) => {
-          console.log(err)
+        )
+        .catch((err) => {
+          console.log(err);
           toast.error("Something went wrong");
         });
     });
@@ -86,7 +86,7 @@ export const Actions = ({
           toast.success(`You have Un Subscribed ${data.subscribing.username}`)
         )
         .catch((err) => {
-          console.log(err)
+          console.log(err);
           toast.error("Something went wrong");
         });
     });

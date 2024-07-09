@@ -49,7 +49,6 @@ const Buttons = ({ user }: { user: any }) => {
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState("");
   const handleDeposit = async () => {
-    console.log("clicked");
     // setShow(false);
     if (parseInt(credits) < 30 || credits === "")
       return toast.error("Minimum deposit is 30 credits");
@@ -61,7 +60,6 @@ const Buttons = ({ user }: { user: any }) => {
         body: JSON.stringify({ id: user?.externalUserId, credits }),
       });
       const data = await res.json();
-      console.log(data);
       if (data.success) {
         setPaymentDetails(data.payout);
         localStorage.setItem("paymentDetails", JSON.stringify(data.payout));
@@ -70,7 +68,7 @@ const Buttons = ({ user }: { user: any }) => {
       }
       setCredits("");
     } catch (error: any) {
-      console.log(error);
+      toast.error(error);
     }
     setLoading(false);
     router.refresh();
@@ -106,7 +104,7 @@ const Buttons = ({ user }: { user: any }) => {
       }
       setCredits("");
     } catch (error: any) {
-      console.log(error);
+      toast.error(error);
     }
     setLoading(false);
     router.refresh();
@@ -114,7 +112,6 @@ const Buttons = ({ user }: { user: any }) => {
   const handleWithdraw = async () => {
     setOpenWith(true);
     if (address === "") return toast.error("Please enter deposit address");
-    console.log(address, credits);
     setLoading(true);
     try {
       if (parseInt(credits) < 1)
@@ -134,14 +131,13 @@ const Buttons = ({ user }: { user: any }) => {
         }),
       });
       const data = await res.json();
-      console.log(data);
       if (data.success) {
         toast.success(data.message);
       } else {
         toast.error(data.message);
       }
     } catch (error: any) {
-      console.log(error);
+      toast.error(error);
     }
     setLoading(false);
     router.refresh();
@@ -218,7 +214,6 @@ const Buttons = ({ user }: { user: any }) => {
         const exp_estimate = parsed?.expiration_estimate_date;
         const expDate = new Date(exp_estimate);
         const currentDate = new Date();
-        console.log(expDate, currentDate);
         if (expDate <= currentDate) {
           setOpen(false);
           setShow(false);

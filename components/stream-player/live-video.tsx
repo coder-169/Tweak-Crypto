@@ -17,7 +17,6 @@ import { toast } from "sonner";
 export const LiveVideo = ({ participant }: LiveVideoProps) => {
   const { send } = useChat();
   const onSubmit = (value: string) => {
-    console.log(send)
     if (!send) return;
     send(value);
   };
@@ -54,9 +53,7 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
       }),
     });
     const data = await res.json();
-    console.log(data);
     if (data?.success) {
-      onSubmit("Streamer received 10 Livs for being in the platform");
       toast.success("You received 10 Livs for being in the platform");
     }
   };
@@ -65,7 +62,7 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
     const timing = setInterval(async () => {
       handleStreamTip();
       console.log("tip added");
-    }, 600000);
+    }, 10000);
     return () => clearInterval(timing);
   }, []);
 
