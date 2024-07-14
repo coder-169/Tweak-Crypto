@@ -12,7 +12,6 @@ export async function POST(req: any, res: any) {
     const origin = headerList.get("origin");
     const { credits, userId } = body;
     const amount = credits / 100;
-    console.log(credits, amount);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -38,7 +37,6 @@ export async function POST(req: any, res: any) {
       success_url: `https://livepayout.org?success=true`,
       cancel_url: `${origin}/`,
     });
-    console.log(session);
     if (session) {
       return NextResponse.json({ session, success: true });
     } else {
@@ -48,7 +46,6 @@ export async function POST(req: any, res: any) {
       });
     }
   } catch (err: any) {
-    console.log(err.message);
     return NextResponse.json(
       {
         message: err.message,

@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { WebhookReceiver } from "livekit-server-sdk";
 
 import { db } from "@/lib/db";
+import { TEMPORARY_REDIRECT_STATUS } from "next/dist/shared/lib/constants";
 
 const receiver = new WebhookReceiver(
   process.env.LIVEKIT_API_KEY!,
@@ -9,35 +10,40 @@ const receiver = new WebhookReceiver(
 );
 
 export async function POST(req: Request) {
-  const body = await req.text();
-  const headerPayload = headers();
-  const authorization = headerPayload.get("Authorization");
+  try {
+    const body = await req.text();
+    const headerPayload = headers();
+    const authorization = headerPayload.get("Authorization");
+    console.log("called");
+    if (!authorization) {
+      return new Response("No authorization header", { status: 400 });
+    }
+    const event = receiver.receive(body, authorization);
+    console.log(event);
 
-  if (!authorization) {
-    return new Response("No authorization header", { status: 400 });
-  }
+    if (event.event === "ingress_started") {
+      await db.stream.update({
+        where: {
+          ingressId: event.ingressInfo?.ingressId,
+        },
+        data: {
+          isLive: true,
+        },
+      });
+    }
 
-  const event = receiver.receive(body, authorization);
-
-  if (event.event === "ingress_started") {
-    await db.stream.update({
-      where: {
-        ingressId: event.ingressInfo?.ingressId,
-      },
-      data: {
-        isLive: true,
-      },
-    });
-  }
-
-  if (event.event === "ingress_ended") {
-    await db.stream.update({
-      where: {
-        ingressId: event.ingressInfo?.ingressId,
-      },
-      data: {
-        isLive: false,
-      },
-    });
+    if (event.event === "ingress_ended") {
+      await db.stream.update({
+        where: {
+          ingressId: event.ingressInfo?.ingressId,
+        },
+        data: {
+          isLive: false,
+        },
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return new Response("Error", { status: 400 });
   }
 }

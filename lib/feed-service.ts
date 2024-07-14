@@ -3,7 +3,7 @@ import { getSelf } from "@/lib/auth-service"
 
 export const getStreams = async () => {
   let userId;
-
+  console.log('here')
   try {
     const self = await getSelf();
     userId = self.id;
