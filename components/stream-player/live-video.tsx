@@ -62,7 +62,7 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
     const timing = setInterval(async () => {
       handleStreamTip();
       console.log("tip added");
-    }, 10000);
+    }, 60000);
     return () => clearInterval(timing);
   }, []);
 
