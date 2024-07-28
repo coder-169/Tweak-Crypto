@@ -38,6 +38,7 @@ export async function POST(req: Request) {
 
   // Verify the payload with the headers
   try {
+    console.log(WEBHOOK_SECRET,body);
     evt = wh.verify(body, {
       "svix-id": svix_id,
       "svix-timestamp": svix_timestamp,
