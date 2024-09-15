@@ -3,7 +3,7 @@ import { getSelf } from "@/lib/auth-service";
 
 export const getRecommended = async () => {
   let userId;
-  console.log("getRecommended")
+  // console.log("getRecommended")
   try {
     const self = await getSelf();
     userId = self.id;

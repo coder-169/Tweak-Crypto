@@ -42,6 +42,7 @@ export const sendMoney = async (params: any) => {
       },
     });
     const data = await response.json();
+    console.log(data);
     if (response.status === 200) {
       return { data, error: false };
     } else {

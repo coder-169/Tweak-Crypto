@@ -35,6 +35,7 @@ import Link from "next/link";
 import { FaTimes } from "react-icons/fa";
 import { BiBitcoin, BiMoneyWithdraw, BiCreditCardAlt } from "react-icons/bi";
 import { IoCaretBack } from "react-icons/io5";
+import Cookies from "js-cookie";
 
 const Buttons = ({ user }: { user: any }) => {
   const [open, setOpen] = useState(false);
@@ -133,6 +134,8 @@ const Buttons = ({ user }: { user: any }) => {
       const data = await res.json();
       if (data.success) {
         toast.success(data.message);
+        setAddress("");
+        setOpenWith(false)
       } else {
         toast.error(data.message);
       }
@@ -207,6 +210,10 @@ const Buttons = ({ user }: { user: any }) => {
   };
 
   useEffect(() => {
+    const sessionCookie = Cookies.get("__session");
+
+    console.log("Session Cookie:", sessionCookie);
+
     if (localStorage.getItem("paymentDetails")) {
       const paymentDetails = localStorage.getItem("paymentDetails");
       const parsed = paymentDetails ? JSON.parse(paymentDetails) : null;
@@ -457,16 +464,16 @@ const Buttons = ({ user }: { user: any }) => {
                               <div className="mt-3 flex flex-col items-center justify-center sm:ml-4 sm:mt-0 sm:text-left">
                                 <DialogTitle
                                   as="h3"
-                                  className="text-base font-semibold leading-6 mt-4 mb-2"
+                                  className="text-base font-semibold leading-6 mt-4 mb-2 text-center"
                                 >
-                                  For Withdrawn of {credits} USDT enter address
+                                  For Withdrawn of {credits} USDT enter your BEP20 address
                                   below
                                 </DialogTitle>
                                 <div className="mt-2 w-full flex gap-2 items-center">
                                   <Input
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
-                                    placeholder="0x432989v84hfasd3423dalfjdoi3"
+                                    placeholder="0x659c4338b23g315c946ab5d0a85d95fa97ff9d45"
                                     type="text"
                                     className="rounded border border-transparent focus:border-gray-400 bg-[#2d2d2d] text-white  mb-4 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                                   />

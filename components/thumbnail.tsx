@@ -46,7 +46,6 @@ export const Thumbnail = ({
       />
     );
   }
-console.log(isLive)
   return (
     <div className="group aspect-video relative rounded-md cursor-pointer">
       <div className="rounded-md absolute inset-0 bg-blue-600 opacity-0 transition-opacity flex items-center justify-center" />

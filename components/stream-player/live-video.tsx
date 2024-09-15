@@ -54,7 +54,9 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
     });
     const data = await res.json();
     if (data?.success) {
-      toast.success("You received 10 Livs for being in the platform");
+      toast.success("You received 1 Livs for being in the platform", {
+        duration: 500,
+      });
     }
   };
   useEffect(() => {
@@ -62,7 +64,7 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
     const timing = setInterval(async () => {
       handleStreamTip();
       console.log("tip added");
-    }, 60000);
+    }, 60000); // 1 minute
     return () => clearInterval(timing);
   }, []);
 

@@ -16,12 +16,12 @@ model User {
   externalUserId String  @unique
   bio            String? @db.Text
   credits        Int     @default(0)
-  lions        Int     @default(0)
-  coins        Int     @default(0)
-  penguins        Int     @default(0)
+  lions          Int     @default(0)
+  coins          Int     @default(0)
+  penguins       Int     @default(0)
 
-  following  Follow[] @relation("Following")
-  followedBy Follow[] @relation("FollowedBy")
+  following    Follow[]     @relation("Following")
+  followedBy   Follow[]     @relation("FollowedBy")
   subscribing  Subscriber[] @relation("Subscribing")
   subscribedBy Subscriber[] @relation("SubscribedBy")
 
@@ -74,8 +74,9 @@ model Follow {
   @@index([followerId])
   @@index([followingId])
 }
+
 model Subscriber {
-  id          String @id @default(uuid())
+  id            String @id @default(uuid())
   subscriberId  String
   subscribingId String
 
@@ -101,4 +102,11 @@ model Block {
   @@unique([blockerId, blockedId])
   @@index([blockerId])
   @@index([blockedId])
+}
+
+model Withdraw {
+  id       String @id @default(uuid())
+  username String @db.Text
+  address  String @db.Text
+  amount   Int    @default(0)
 }
