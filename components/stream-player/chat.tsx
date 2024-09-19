@@ -85,7 +85,6 @@ export const Chat = ({
         normMsgs.push(msgs[i]);
       }
     }
-    console.log(messages);
     return [...penguinMsgs, ...lionMsgs, ...coinMsgs, ...normMsgs];
   }, [messages]);
 

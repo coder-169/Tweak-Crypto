@@ -32,7 +32,6 @@ export async function POST(req: Request) {
         credits: body?.newCreds,
       },
     });
-    // console.log(user);
     return NextResponse.json(
       { success: true, message: "Credits Withdrawn Request Sent" },
       {

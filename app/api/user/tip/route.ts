@@ -5,7 +5,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { receiver, sender, tip } = body;
-    console.log(body)
     const tipReceiver = await db.user.findUnique({
       where: {
         username: receiver,
@@ -39,8 +38,6 @@ export async function POST(req: Request) {
       );
     }
     // const res = { error: false, message: "Withdrawn Successfully" };
-    console.log("tipReceiver", tipReceiver);
-    console.log("tipSender", tipSender);
     await db.user.update({
       where: {
         username: sender,

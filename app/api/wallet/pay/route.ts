@@ -6,9 +6,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const body = await req.json();
     const { id } = body;
-    console.log(id);
     if (id) {
-      console.log("here");
       const account = await db.withdraw.findUnique({
         where: {
           id,

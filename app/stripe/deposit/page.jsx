@@ -41,7 +41,6 @@ const PaymentForm = () => {
   const stripe = useStripe();
   const handlePayment = async () => {
     if (!stripe || !elements) return;
-    console.log(stripe, elements);
     setLoading(true);
     toast.loading("Processing payment", { duration: 1500 });
     try {

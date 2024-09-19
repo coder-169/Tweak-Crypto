@@ -7,7 +7,6 @@ export async function POST(req: Request) {
     const myuser = await currentUser();
     const body = await req.json();
     const { receiver, sticker, sendQty } = body;
-    console.log(myuser,receiver)
     if (myuser?.username === null) {
       return NextResponse.json({
         success: false,

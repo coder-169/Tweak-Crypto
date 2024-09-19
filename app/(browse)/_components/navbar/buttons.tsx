@@ -212,7 +212,6 @@ const Buttons = ({ user }: { user: any }) => {
   useEffect(() => {
     const sessionCookie = Cookies.get("__session");
 
-    console.log("Session Cookie:", sessionCookie);
 
     if (localStorage.getItem("paymentDetails")) {
       const paymentDetails = localStorage.getItem("paymentDetails");

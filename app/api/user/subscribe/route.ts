@@ -23,7 +23,6 @@ export async function POST(req: Request) {
     }
     const body = await req.json();
     const { hostIdentity } = body;
-    console.log(hostIdentity);
     const subscribing = await db.user.findUnique({
       where: {
         id: hostIdentity,

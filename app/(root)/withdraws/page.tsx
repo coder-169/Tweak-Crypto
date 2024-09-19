@@ -14,7 +14,6 @@ const Page = () => {
   const payAll = async () => {
     setLoading(true);
     try {
-      console.log("here");
       const res = await fetch("/api/wallet/pay", {
         method: "POST",
         headers: {
@@ -22,13 +21,11 @@ const Page = () => {
         },
         body: JSON.stringify({}),
       });
-      console.log(res);
       const data = await res.json();
       if (data.success) {
         toast.success(data.message);
         setData(data.accounts);
       } else {
-        console.log("here");
         toast.error(data.message);
       }
     } catch (error: any) {

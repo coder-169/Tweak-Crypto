@@ -43,7 +43,6 @@ export const ConnectModal = () => {
           closeRef?.current?.click();
         })
         .catch((err) => {
-          console.log(err.message);
           toast.error("Something went wrong");
         });
     });

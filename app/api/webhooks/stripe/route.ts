@@ -10,7 +10,6 @@ export async function POST(request:any, response:any) {
   const body = await request.json();
   const headerList = headers();
   const sig = headerList.get("stripe-signature") || '';
-  console.log(body);
   let event;
 
   try {

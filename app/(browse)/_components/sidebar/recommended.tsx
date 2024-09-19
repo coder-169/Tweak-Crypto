@@ -17,7 +17,6 @@ export const Recommended = ({
 }: RecommendedProps) => {
   const { collapsed } = useSidebar((state) => state);
   const showLabel = !collapsed && data.length > 0;
-
   return (
     <div>
       {showLabel && (
@@ -29,6 +28,7 @@ export const Recommended = ({
       )}
       <ul className="space-y-2 px-2">
         {data.map((user) => (
+          
           <UserItem
             key={user.id}
             username={user.username}
@@ -37,7 +37,7 @@ export const Recommended = ({
           />
         ))}
       </ul>
-    </div>
+    </div> 
   );
 };
 

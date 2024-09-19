@@ -29,7 +29,6 @@ export async function POST(req: any, res: any) {
       message: "Payment Processing",
     });
   } catch (err: any) {
-    console.log(err.message);
     return NextResponse.json(
       {
         message: err.message,
