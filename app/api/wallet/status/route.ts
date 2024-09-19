@@ -14,8 +14,7 @@ export async function POST(req: Request) {
       }
     );
     const d = await resp.json();
-    const newCredits = d.pay_amount + (body.credits * 100)
-    console.log(newCredits)
+    const newCredits = d.price_amount * 100 + body.credits;
     if (d.payment_status === "finished") {
       await db.user.update({
         where: {
@@ -26,10 +25,9 @@ export async function POST(req: Request) {
         },
       });
     }
-    console.log(d);
     return NextResponse.json({
       success: true,
-      message: "status found",
+      message: "Credits deposited",
       details: d,
     });
   } catch (error: any) {

@@ -79,7 +79,7 @@ const Buttons = ({ user }: { user: any }) => {
     setLoading(true);
     setOpen(true);
     try {
-      const res = await fetch("/api/wallet/status", {
+    const res = await fetch("/api/wallet/status", {
         method: "POST",
         body: JSON.stringify({
           id,

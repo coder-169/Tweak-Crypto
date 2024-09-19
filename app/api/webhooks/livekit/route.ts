@@ -1,8 +1,7 @@
 import { headers } from "next/headers";
 import { WebhookReceiver } from "livekit-server-sdk";
-
 import { db } from "@/lib/db";
-import { TEMPORARY_REDIRECT_STATUS } from "next/dist/shared/lib/constants";
+import { NextResponse } from "next/server";
 
 const receiver = new WebhookReceiver(
   process.env.LIVEKIT_API_KEY!,
@@ -14,10 +13,14 @@ export async function POST(req: Request) {
     const body = await req.text();
     const headerPayload = headers();
     const authorization = headerPayload.get("Authorization");
+    console.log('here')
+    
     if (!authorization) {
       return new Response("No authorization header", { status: 400 });
     }
+    console.log('here 2')
     const event = receiver.receive(body, authorization);
+    console.log(event)
     if (event.event === "ingress_started") {
       await db.stream.update({
         where: {
@@ -39,7 +42,9 @@ export async function POST(req: Request) {
         },
       });
     }
+    return NextResponse.json({success:true})
   } catch (error) {
+    console.log(error)
     return new Response("Error", { status: 400 });
   }
 }
