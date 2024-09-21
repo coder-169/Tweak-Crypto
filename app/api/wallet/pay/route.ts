@@ -12,6 +12,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
           id,
         },
       });
+      
       const params = {
         coin: "BNB",
         amount: account?.amount,
