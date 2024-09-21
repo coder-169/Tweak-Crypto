@@ -85,7 +85,6 @@ export const Actions = ({
           toast.success(`You have Un Subscribed ${data.subscribing.username}`)
         )
         .catch((err) => {
-          console.log(err);
           toast.error("Something went wrong");
         });
     });

@@ -6,7 +6,6 @@ export async function POST(req: Request) {
     const myuser = await currentUser();
     const body = await req.json();
     const { credits, id } = body;
-    console.log(myuser)
     if (myuser === null)
       return NextResponse.json({ success: false, message: "Please login" });
     const user = await db.user.findUnique({

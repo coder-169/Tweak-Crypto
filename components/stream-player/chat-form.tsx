@@ -57,7 +57,7 @@ export const ChatForm = ({
     imageUrl: "",
   });
   const getUser = async () => {
-    if (isHidden) return;
+    // if (isHidden) return;
     try {
       const res = await fetch("/api/user", { method: "GET" });
       const data = await res.json();
@@ -74,7 +74,6 @@ export const ChatForm = ({
     const command = value.trim().split(" ");
     const userId = location.pathname.slice(1);
     try {
-      console.log("adding tip");
       const res = await fetch(`/api/user/tip`, {
         method: "POST",
         headers: {
@@ -104,7 +103,6 @@ export const ChatForm = ({
     e.stopPropagation();
 
     if (!value || isDisabled) return;
-
     if (isDelayed && !isDelayBlocked) {
       setIsDelayBlocked(true);
       setTimeout(() => {

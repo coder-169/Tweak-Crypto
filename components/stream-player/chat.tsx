@@ -67,7 +67,6 @@ export const Chat = ({
         msgs[i].message.toLowerCase().includes("sent") &&
         msgs[i].message.toLowerCase().includes("lion")
       ) {
-        console.log("we are here");
         lionMsgs.push(msgs[i]);
       } else if (
         msgs[i].message.toLowerCase().includes("sent") &&

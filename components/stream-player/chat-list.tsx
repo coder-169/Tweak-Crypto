@@ -32,7 +32,6 @@ export const ChatList = ({ messages, isHidden }: ChatListProps) => {
         msg.message.toLowerCase().includes("sent") &&
         msg.message.toLowerCase().includes("liv")
     );
-    console.log(msgs);
     return msgs;
   };
 

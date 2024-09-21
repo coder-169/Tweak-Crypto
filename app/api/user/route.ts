@@ -25,7 +25,7 @@ export async function GET(req: Request) {
           }
         );
       return NextResponse.json(
-        { success: true,user, message: "user found" },
+        { success: true, user, message: "user found" },
         {
           status: 200,
         }

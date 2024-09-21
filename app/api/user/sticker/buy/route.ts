@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const myuser = await currentUser();
-    console.log(myuser);
     const body = await req.json();
     const { sticker, buyQty } = body;
     if (myuser?.username === null) {

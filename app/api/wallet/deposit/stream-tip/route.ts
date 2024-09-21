@@ -42,7 +42,6 @@ export async function POST(req: Request) {
         id,
       },
     });
-    console.log(user);
     if (user) {
       await db.user.update({
         where: { id },

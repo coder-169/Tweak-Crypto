@@ -39,7 +39,6 @@ export async function POST(req: Request) {
     const { credits } = body;
     const price_amount = parseInt(credits);
     const newPrice = price_amount / 100;
-    console.log(newPrice);
     var json = JSON.stringify({
       price_amount: newPrice,
       price_currency: "USD",
@@ -58,7 +57,6 @@ export async function POST(req: Request) {
       body: json,
     });
     const d = await resp.json();
-    console.log(d);
     if (resp.ok) {
       return NextResponse.json(
         { success: true, payout: d, message: "Payment Created Successfully" },
@@ -116,7 +114,6 @@ export async function POST(req: Request) {
 //         body: JSON.stringify(payload),
 //       });
 //       const dt = await response.json();
-//       console.log(dt);
 //       if (response.ok) {
 //         return NextResponse.json(
 //           { success: true, checkoutUrl: dt.data.checkoutUrl },

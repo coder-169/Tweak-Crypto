@@ -58,8 +58,7 @@ const PaymentForm = () => {
       const data = await response.json();
       if (data.success) {
         const { client_secret } = data;
-        console.log("🚀 ~ checkOut ~ data", data);
-        console.log(client_secret);
+
         const result = await stripe.confirmCardPayment(client_secret, {
           payment_method: {
             type: "card",

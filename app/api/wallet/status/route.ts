@@ -72,7 +72,6 @@ export async function POST(req: Request) {
 //         body: JSON.stringify(payload),
 //       });
 //       const dt = await response.json();
-//       console.log(dt);
 //       if (response.ok) {
 //         return NextResponse.json(
 //           { success: true, checkoutUrl: dt.data.checkoutUrl },
