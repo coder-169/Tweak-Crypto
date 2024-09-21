@@ -13,7 +13,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         },
       });
       const params = {
-        coin: "USDT",
+        coin: "BNB",
         amount: account?.amount,
         address: account?.address,
       };
