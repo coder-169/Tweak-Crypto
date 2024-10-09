@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
+  console.log('Current Vercel Region:', process.env.VERCEL_REGION);
   try {
     const myuser = await currentUser();
 
