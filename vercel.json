@@ -1,32 +1,28 @@
 {
-  "functions": {
-    "api/**/*.js": {
-      "regions": [
-        "sin",
-        "ams",
-        "arn",
-        "bog",
-        "bom",
-        "cdg",
-        "eze",
-        "fra",
-        "gdl",
-        "gig",
-        "gru",
-        "hkg",
-        "jnb",
-        "lhr",
-        "mad",
-        "nrt",
-        "otp",
-        "qro",
-        "scl",
-        "sin",
-        "syd",
-        "waw",
-        "yul",
-        "yyz"
-      ]
-    }
-  }
+  "regions": [
+    "sin",
+    "ams",
+    "arn",
+    "bog",
+    "bom",
+    "cdg",
+    "eze",
+    "fra",
+    "gdl",
+    "gig",
+    "gru",
+    "hkg",
+    "jnb",
+    "lhr",
+    "mad",
+    "nrt",
+    "otp",
+    "qro",
+    "scl",
+    "sin",
+    "syd",
+    "waw",
+    "yul",
+    "yyz"
+  ]
 }
