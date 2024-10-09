@@ -21,7 +21,7 @@ export const sendMoney = async (params: any) => {
     });
     const dt = await resp.json();
     const serverTime = dt.serverTime;
-
+    console.log(serverTime);
     var recvWindow = 2000; // Maximum recvWindow value
     params.timestamp = serverTime - recvWindow;
     let query = Object.keys(params)
@@ -42,6 +42,9 @@ export const sendMoney = async (params: any) => {
       },
     });
     const data = await response.json();
+    console.log("45");
+    console.log(data);
+
     if (response.status === 200) {
       return { data, error: false };
     } else {
